@@ -1,0 +1,17 @@
+.CollapsePage{
+    background-color:#ebe5e5 ;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .colapsContainer{
+        padding-top: 50px;
+        width: calc(100% - 20%);
+        height: fit-content;
+        @media (max-width: 700px){
+            width: calc(100% - 5%); 
+        }
+    }
+}
+
+

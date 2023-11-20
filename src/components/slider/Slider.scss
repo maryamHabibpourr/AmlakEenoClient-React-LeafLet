@@ -1,0 +1,77 @@
+.sliderContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    background-color:#ebe5e5 ;
+    .contain {
+        width: 90%;
+        position: relative;
+        .cardSlider{
+            width: 200px;
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+            &:hover{
+              .cardContent {
+                a{
+                  color: red; 
+                }
+              }
+            }
+            .cardmMdia{
+                width: 100%;
+                padding: 7px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img{
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                }
+            }
+            .cardContent{
+                width: 100%;
+                padding: 7px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+           
+                a{
+                  font-weight: 600;
+                  font-size: 1rem;
+                  color: #333;
+                }
+            }
+
+        }
+        .carousel-initialized {
+          position: static;
+        }
+    
+    .slick-prev,
+    .slick-next {
+      width: 15px;
+      height: 30px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin-left: 10px;
+      margin: auto;
+      color: rgb(0,0,0,0.8);
+      border-radius: 50%;
+      z-index: 10;
+
+      &:hover{
+        background: rgb(0,0,0,0.8);
+        color: #fff;
+      }
+    }
+   
+    
+  }
+}
+

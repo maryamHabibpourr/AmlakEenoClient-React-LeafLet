@@ -1,0 +1,73 @@
+.mediaSharing{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999 !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    .mediaSharingContainer{
+        width: 500px;
+        min-height: 500px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 25px;
+        .card{
+            width:350px;
+            background-color: #fff;
+            .titleCloseBtn {
+                display: flex;
+                justify-content: flex-start;
+                button{
+                  font-size: 20px;
+                  font-weight: 300;
+                  margin: 10px;
+                  color: #333 !important;
+                  background: none;
+                  border: none;
+                  cursor: pointer;
+                }
+              }
+              .mediaIcons{
+                padding: 1rem 2rem 2rem 2rem;
+                animation: slide-up 0.5s ease;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 10px;
+                @media(max-width:700px){
+                    padding: 1rem 0.1rem 2rem 0.1rem;
+                }
+              }
+        }
+    }
+}
+
+
+
+@keyframes slide-up {
+    0% {
+      transform: translateY(-5rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+
+  @media screen and (max-width: 600px){
+    .mediaSharingContainer{
+      width:calc(100% - 10%) !important;
+      .card{
+        width:calc(100% - 2%) !important;
+      }
+    }
+  }

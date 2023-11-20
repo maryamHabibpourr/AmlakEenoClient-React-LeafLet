@@ -1,0 +1,149 @@
+
+:root {
+  --font-family: "YekanBakh", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+
+  --bg-color: #3e3e3e;
+  --bg-light-color: #888;
+  --main-gary-color:#F1F1F1;
+  --main-accent-color: #fecc01;
+
+
+  --color-white: #fff;
+  --color-dark: #333;
+  --color-dark-blue:#0D1117;
+
+  --color-grey: #eee;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  --color-purple: #9d0191;
+  --color-orange: #ff7722;
+  --color-gray:  #807878;
+
+  --color-primary: #007bff;
+  --light-green:#35A299;
+  --color-success: #28a745;
+  --light-orange:#FFA28B;
+
+
+  --color-red :#e10a1d;
+  --color-dark-red :#82050f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+
+
+body {
+  font-family: var(--font-family) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: YekanBakh;
+ 
+}
+
+
+/* Heading */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-dark);
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+
+p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-dark);
+}
+
+a {
+  text-decoration: none;
+}
+
+ul li{
+  list-style: none;
+  cursor: pointer;
+}
+
+.--btn {
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 6px 8px;
+  margin: 0 5px 0 0;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.--btn:hover {
+  transform: translateY(-2px);
+}
+
+.--btn-lg {
+  padding: 8px 10px;
+}
+
+.--btn-block {
+  width: 100%;
+}
+
+.--btn-primary {
+  color: #fff;
+  background: #007bff;
+}
+.--btn-secondary {
+  color: #fff;
+  border: 1px solid #fff;
+  background: transparent;
+}
+.--btn-danger {
+  color: #fff;
+  background: orangered;
+}
+
+.--btn-success {
+  color: #fff;
+  background: #28a745;
+}
+
+
+.leaflet-container{
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background-color: #fff;
+  color: gray;
+  cursor: pointer;
+}
+
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background-color: red;
+}
+
+
+.leaflet-control-attribution.leaflet-control {
+  display: none !important;
+}

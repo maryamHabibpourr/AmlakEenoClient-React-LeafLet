@@ -1,0 +1,114 @@
+.modalContainer{
+    background-color: #f1f1f1;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999 !important; 
+    @media(max-width:700px){
+        position: inherit;
+        height: max-content;
+        padding: 30px 0px;
+    }
+
+    .MainContainer{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        @media(max-width:700px){
+            width: calc(100% - 10%);
+            flex-direction: column;
+            gap: 30px;
+        }
+        .videoContainer{
+            position: relative;
+            width: 70%;
+            height:100vh;
+            @media(max-width:700px){
+                width: calc(100% - 2%);
+                height:60vh;
+            }
+            video{
+                width: 100%;
+                height: 100%;
+                object-fit: cover; 
+            }
+            .appVideoOverlay{
+                position: absolute;
+                inset: 0;
+                background: rgba(0,0,0,0.20); 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .appVideoOverlayCircle{
+                    h1{
+                        font-size: 3rem;
+                        color: #000;
+                        font-weight: 800;
+                        font-style: italic;
+                        direction: rtl;
+
+                    }
+                } 
+            }  
+        }
+        .contentOntactus{
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 20px;
+            @media(max-width:700px){
+                width: calc(100% - 10%);
+            }
+            h4{
+                font-size: 2.2rem;
+                color: #000;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+            p{
+                font-size: 1.1rem;
+                color: #000;
+                font-weight: 500;
+                margin-bottom: 15px; 
+                text-align:center;
+            }
+            span{
+                font-size: 1rem;
+                color: car(--color-red);
+                font-weight: 600;
+                margin-bottom: 15px; 
+            }
+            button{
+                width: 200px;
+                font-size: 1rem;
+                background-color: #000;
+                color: #fff;
+                border: 1px solid #000;
+                cursor: pointer;
+                border-radius: 5px;
+                &:hover{
+                    background-color:var(--color-red);
+                    border: 1px solid var(--color-red); 
+                    transition: all 0.2s ease-in-out;
+                    transform: translateX(5px);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+  

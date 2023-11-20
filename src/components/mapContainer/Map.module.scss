@@ -1,0 +1,30 @@
+.mContainer{
+    height: 50vh;
+    @media screen and (max-width : 1000px) {
+        display: none;
+    }
+    
+}
+
+.customPopup {
+    max-width: 150px !important; 
+    height: 200px; 
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    h1{
+        font-size: 14px;
+        font-family: YekanBakh;
+        font-weight: 400;
+        text-align: center;
+    }
+ 
+    button{
+        background-color:#e10a1d;
+        border: 1px solid #e10a1d;
+        padding: 3;
+        font-size: 14px;
+        font-weight: 300;
+        font-family:YekanBakh ;
+    }
+  }

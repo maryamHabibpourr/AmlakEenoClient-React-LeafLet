@@ -1,0 +1,87 @@
+.commentComponent{
+    width: 100%;
+    padding: 20px 50px;
+    background-color:#f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 700px){
+        padding: 0;
+        margin: 15px 0px 5px 0px;
+    }
+    .CommentPostContainer{
+        width: 98%;
+        padding:20px; 
+        background-color: #fff;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+        @media (max-width: 700px){
+            width: calc(100% - 2%);
+        }
+        .commentPost{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            button{
+                margin-top: 10px;
+                background-color: var(--color-red);
+                font-size: 1rem;
+                border: 1px solid var(--color-red);
+                cursor: pointer;
+                &:hover{
+                    background-color: var(  --color-dark-red );
+                    transform: translateX(5px);
+                    transition: all 0.3 ease;
+                }
+            }
+        }
+   
+    }
+    .container{
+        width: 60%;
+        padding:30px; 
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        @media(max-width:700px){
+            width: calc(100% - 2%);
+        }
+        h3{
+            margin-bottom: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: gray;
+        }
+        .dialogBox{
+            width: calc(100% - 2%);
+            margin-bottom: 30px;
+
+            .dialogBody{
+                padding: 20px 5px;
+                background: #f1f1f1;
+                border-bottom:1px solid #DADADA ;
+                p{
+                    font-size: 1rem;
+                }
+            }
+            .time{
+                float: left;
+                font-size: 1rem;
+                color: #aaa7a7 ;
+            }
+            .user{
+                float: right;
+                font-size: 1rem;
+                color: #aaa7a7 ;
+            }
+        } 
+    }
+}

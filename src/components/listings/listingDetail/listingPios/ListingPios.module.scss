@@ -1,0 +1,68 @@
+.MapInterestAreaContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+
+    @media(max-width: 700px) {
+        padding: 0px;
+    }
+    .MapInterestCardContainer{
+        background-color: #fff;
+        width: 100%;
+        padding: 20px;
+        @media (max-width:900px){
+         width: calc(100% - 2%);
+        }
+        .carditemContainer{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 1rem;
+            @media(max-width:850px){
+                flex-direction: column-reverse;
+                gap: 10px;
+            }
+            .cardItemInfo{
+                width: 30%;
+                height: 35rem;
+                overflow: auto;
+                @media(max-width:850px){
+                    width: 100%;
+                    height: fit-content;
+                }
+            }
+            .cardMapInfo{
+                width: 70%;
+                height: 35rem;
+                @media(max-width: 850px){
+                    height:300px;
+                    width: 100%;
+                }
+            }
+        }
+
+        .cardPio{
+            display: flex;
+            flex-direction: column;
+            gap:5px;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            padding: 10px;
+            div{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+
+  

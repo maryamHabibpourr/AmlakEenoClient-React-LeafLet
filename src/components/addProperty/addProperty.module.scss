@@ -1,0 +1,28 @@
+.formContainer{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1; 
+    .cardContainer{
+        width: 1040px;
+        padding: 50px;
+        background-color: #fff;
+        margin: 100px 100px;
+        @media(max-width: 800px){
+            padding: 30px 10px;
+            width: calc(100% - 10%);
+            margin:30px 0px 30px 0px;
+        }
+        .mapContainer{
+            height: 400px;
+            margin: 5px 0px 40px 0px;
+     
+            @media(max-width:500px){
+                height: 300px; 
+            }
+
+        }
+    }
+}
+

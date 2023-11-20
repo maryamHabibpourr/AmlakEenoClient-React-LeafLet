@@ -1,0 +1,15 @@
+.footer {
+    background-color:rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    @media(max-width:500px){
+        font-size: 12px; 
+    }
+    p {
+      color: #fff;
+    }
+  }

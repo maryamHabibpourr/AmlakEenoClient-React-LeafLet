@@ -1,0 +1,30 @@
+.search {
+    position: relative;
+    background-color: #f1f1f1;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      color:#e10a1d;
+      font-weight: 500;
+      transform: translateY(-50%);
+    }
+  
+    input[type="text"] {
+      display: block;
+      font-size: 1rem;
+      font-weight: 300;
+      padding: 10px;
+      padding-left: 10rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      outline: none;
+      margin: auto;
+      font-family: "YekanBakh";
+    }
+  }

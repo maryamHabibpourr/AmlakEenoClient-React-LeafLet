@@ -1,0 +1,377 @@
+.listingList{
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f1f1;
+  min-height: 100vh;
+  
+  @media screen and (max-width:1000px){
+    padding-top: 10px;
+  }
+  
+  .top{
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem;
+    @media screen and (max-width:1000px) {
+      flex-direction: column;
+      align-items: start;
+      gap: 10px;
+    }
+  
+    .icons {
+      width: fit-content;
+      @media(max-width:1000px){
+        width: 100%;
+      }
+      button{
+        width: 100%;
+        background-color: #fff;
+        color: #868484;
+        font-size: 1rem;
+        font-weight: 500;
+        border: 1px solid #fff;
+      }
+    }
+    .searchIcon{
+      @media(max-width:1000px){
+        width: 100%;
+      }
+    }
+    .sort {
+      background-color: #fff;
+      width: fit-content;
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: YekanBakh;
+      @media(max-width:1000px){
+        width: 100%;
+      }
+      label {
+        font-size: 14px;
+        color: #868484;
+        font-weight: 500;
+        font-family: YekanBakh;
+        padding: 2px;
+      }
+      select {
+        padding: 5px;
+        font-size: 14px;
+        color: #868484;
+        font-weight: 500;
+        border: 1px solid var(--color-red);
+        font-family: YekanBakh;
+    
+        option{
+          font-family: YekanBakh;
+          font-size: 14px;
+        }
+    }
+  
+  }
+  }
+
+  .bottom{
+    width: 100%;
+    display: flex;
+    .filter {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s;
+      height: fit-content;
+      border: 1px solid #f1f1f1;
+      background-color: #f1f1f1;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      right: 0;
+      @media(max-width:1000px){
+        display: none;
+      }
+   
+
+        .category button {
+          display: block;
+          text-align:right;
+          width:calc(100% - 20%);
+          height: 3rem;
+          font-size: 14px;
+          font-weight: 500;
+          color:#333333;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          margin: 0px 20px;
+          border-bottom: 1px solid #cac4c4;
+          font-family: YekanBakh;
+          span{
+            font-family: YekanBakh;
+            font-size: 1rem;
+          }
+        }
+      
+        .brand {
+          width: 100%;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          font-family: YekanBakh;
+          .brandTitle{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            font-family: YekanBakh;
+          }
+          select {
+            font-size: 14px;
+            color: #333333;
+            font-weight: 600;
+            width: 90%;
+            border: 1px solid #d2cbcb;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-family: YekanBakh;
+          }
+          .priceContainer{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .priceTitle{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              color: #333333;
+              gap:5px;
+              span{
+                font-weight: 500;
+                font-size: 1rem;
+                color: #333333;
+              }
+            }
+            .price{
+              color: #333333;
+            }
+          }
+          button{
+            font-family: YekanBakh;
+            font-size: 1rem;
+            background-color: #cac4c4;
+            color: #333;
+            font-weight: 500;
+            border: none;
+            border-radius: 3px;
+            padding: 3px;
+            cursor: pointer;
+            &:hover{
+              background-color: #e10a1d;
+              border: 1px solid #e10a1d;
+              transition: all 0.3s ease-in;
+              color:#fff;
+            }
+  
+          }
+        }
+      }
+
+      .grid{
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        @media screen and (max-width:1000px){
+          width: 100% !important;
+        }
+      }
+  }
+
+}
+
+
+.active {
+  position: relative;
+  padding-right: 2rem;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 5px;
+  height: 100%;
+  background-color: #e10a1d;
+}
+
+
+.filterTitlrIcon{
+  position: relative;
+  width: 100%;
+  display: none;
+  cursor: pointer;
+  @media (max-width:1000px){
+    display: flex;
+  }
+  button{
+    width: 100%;
+    background-color: #fff !important;
+    color: #868484;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid #fff !important;
+  }
+}
+
+.filt{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  height: fit-content;
+  border: 1px solid #f1f1f1;
+  background-color: #f1f1f1;
+  z-index: 9990 !important;
+  border: 1px solid #ccc;
+  font-family: YekanBakh;
+  .category button{
+    display: block;
+    text-align:right;
+    width:calc(100% - 20%);
+    height: 3rem;
+    font-size: 14px;
+    font-weight: 500;
+    color:#333333;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 0px 20px;
+    border-bottom: 1px solid #cac4c4;
+    font-family: YekanBakh;
+  }
+
+  .brand {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    font-family: YekanBakh;
+    .brandTitle{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      font-family: YekanBakh;
+      span{
+        font-family: YekanBakh;
+        font-size: 14px;
+      }
+    }
+    select {
+      font-size: 14px;
+      color: #333333;
+      font-weight: 500;
+      width: 90%;
+      border: 1px solid #d2cbcb;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      font-family: YekanBakh;
+    }
+    .priceContainer{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: YekanBakh;
+      .priceTitle{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333333;
+        background-color: #e10a1d;
+        font-family: YekanBakh;
+        font-size: 14px;
+        gap:5px;
+        span{
+          width: 100%;
+          font-weight: 500;
+          font-size: 14px;
+          color: #333333;
+          font-family: YekanBakh;
+        }
+      }
+      .price{
+        color: #333333;
+        font-family: YekanBakh;
+      }
+    }
+    button{
+      font-family: YekanBakh;
+      font-size: 1rem;
+      background-color: #cac4c4;
+      color: #333;
+      font-weight: 500;
+      border: none;
+      border-radius: 3px;
+      padding: 3px;
+      cursor: pointer;
+      &:hover{
+        background-color: #e10a1d;
+        border: 1px solid #e10a1d;
+        transition: all 0.3s ease-in;
+        color:#fff;
+      }
+
+    }
+  }
+}
+
+
+
+.bottom_detaile{
+  -webkit-animation:  bottom_detaile 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation:  bottom_detaile 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+
+
+@keyframes bottom_detaile {
+  0% {
+    -webkit-transform: translateX(50%);
+            transform: translateX(50%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+
+.bottom_close {
+  -webkit-animation:  bottom_close  0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation:  bottom_close  0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes  bottom_close {
+  0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(100%);
+              transform: translateX(100%);
+    }
+}
