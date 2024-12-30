@@ -6,6 +6,8 @@ import Axios from 'axios';
 import { useImmerReducer } from "use-immer";
 
 
+
+
 //mui
 import { makeStyles } from '@mui/styles';
 import { CssTextField } from "../../muiSettings/Settings";
@@ -23,7 +25,6 @@ import Register from './Register'
 
 
 const useStyles = makeStyles({
-
   registrationStyle: {
     backgroundColor: "var(--color-red) !important",
     color: "#fff",
@@ -45,15 +46,12 @@ const useStyles = makeStyles({
 
 
 
-
-
 const Login = ({setRegisterOpen, setLoginOpen }) => {
 
   const navigate = useNavigate();
   const classes = useStyles()
   const GlobalDispatch = useContext(DispatchContext)
  
-
 
 
   const initialState = {
@@ -68,7 +66,6 @@ const Login = ({setRegisterOpen, setLoginOpen }) => {
     serverError: false,
 
   }
-
 
 
   function ReducerFunction(draft, action) {
@@ -238,18 +235,15 @@ function RegisterAct(){
                   ورود
                 </Typography>
               </Grid>
-
               {state.serverError ? (
                 <Alert severity="error" className={classes.alert}>رمز عبور یا نام کاربری اشتباه است.</Alert>
               ) : (
                 ""
               )}
-
-
               <Grid item container
                 style={{ marginTop: "1rem", fontSize: "1.5rem" }}>
                 <CssTextField
-                  id="username"
+                  id="phoneNumber"
                   label="نام کاربری"
                   variant="outlined"
                   inputProps={{ style: { fontSize: 16 } }}
@@ -265,8 +259,6 @@ function RegisterAct(){
                   error={state.serverError ? true : false}
                 />
               </Grid>
-
-
 
 
               <Grid item container

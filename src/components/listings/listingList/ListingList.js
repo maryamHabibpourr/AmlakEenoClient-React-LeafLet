@@ -2,65 +2,39 @@ import React, { useEffect, useState } from "react";
 import styles from "./ListingList.module.scss";
 
 //component
-import Search from "../../search/Search"
+import Search from "../../search/Search";
 import ListingCard from "../listingItem/ListingCard";
-import { ListingContainer } from "../listingItem/ListingCardStyle"
+import { ListingContainer } from "../listingItem/ListingCardStyle";
 
 //react icons
 import { BsFillGridFill } from "react-icons/bs";
 import { FaCogs } from "react-icons/fa";
 
-
 //useImmerReducer
 import { useImmerReducer } from "use-immer";
-import { Button } from "@mui/material";
-
 
 //persian tools
-import { digitsEnToFa , numberToWords} from "@persian-tools/persian-tools";
-   
+import { digitsEnToFa, numberToWords } from "@persian-tools/persian-tools";
 
+//material ui
+import { Pagination, Button } from "@mui/material";
 
 
 
 function ListingList({ allListings }) {
-    const [showFilter, setShowFilter] = useState(false);
-    const [category, setCategory] = useState("همه")
 
-
-    //setting category####################
-    const allCategories = [
-        "همه",
-        ...new Set(allListings.map((listing) => listing.bargain_type)),
-    ];
-    // console.log(allCategories);
-
-
-
-    //setting Brand########################
-    const allBroughs = [
-        "همه",
-        ...new Set(allListings.map((listing) => listing.borough)),
-    ];
-    // console.log(allBroughs);
-
-
-
-
+    // تعریف initialState با مقدار اولیه filteredListings برابر با allListings
     const initialState = {
         category: "همه",
         sort: "روزترین",
         grid: true,
         search: "",
-        filteredListings: [],
+        filteredListings: allListings, // تنظیم مقدار اولیه به allListings
         borough: "همه",
-        price:200000000000,
+        price: 200000000000,
         minPrice: null,
         maxPrice: null,
-    }
-
-
-
+    };
 
     function ReducerFunction(draft, action) {
         // eslint-disable-next-line default-case
@@ -73,43 +47,72 @@ function ListingList({ allListings }) {
                 break;
             case "filterBySearchChange":
                 draft.filteredListings = action.filterBySearchChose;
-                break
+                break;
             case "sortByChange":
-                draft.filteredListings = action.sortByChangeChose
-                break
+                draft.filteredListings = action.sortByChangeChose;
+                break;
             case "categoryFilterChange":
-                draft.filteredListings = action.categoryFilterChose
-                break
+                draft.filteredListings = action.categoryFilterChose;
+                break;
             case "catchBoroughChange":
                 draft.borough = action.boroughChose;
-                return;
+                break;
             case "boroughFilterChange":
                 draft.filteredListings = action.boroughFilterChose;
                 break;
             case "catchPriceChange":
                 draft.price = action.priceChose;
-                return draft;
+                break;
             case "priceFilterChange":
                 draft.filteredListings = action.priceFilterChose;
-                break
+                break;
             case "cleareFilter":
                 draft.price = 2000000000;
                 draft.borough = "همه";
                 draft.filteredListings = allListings;
-                break
+                break;
             default:
                 return draft;
         }
     }
 
+    const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
 
-    const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
+    const [showFilter, setShowFilter] = useState(false);
+    const [category, setCategory] = useState("همه");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 12;
 
+    //setting for pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+    const currentListings = state.filteredListings.slice(indexOfFirstItem, indexOfLastItem);
 
+    // تابع تغییر صفحه
+    const handleChangePage = (event, value) => {
+        setCurrentPage(value);
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // اسکرول به بالا هنگام تغییر صفحه
+    };
 
+    // بازنشانی صفحه فعلی به 1 هنگام تغییر filteredListings
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [state.filteredListings]);
 
-    //related to the filter search
+    //setting category####################
+    const allCategories = [
+        "همه",
+        ...new Set(allListings.map((listing) => listing.bargain_type)),
+    ];
+
+    //setting Brand########################
+    const allBroughs = [
+        "همه",
+        ...new Set(allListings.map((listing) => listing.borough)),
+    ];
+
+    // مرتبط با جستجو
     useEffect(() => {
         dispatch({
             type: "filterBySearchChange",
@@ -120,20 +123,14 @@ function ListingList({ allListings }) {
                 listing.borough?.includes(state.search)
             ),
         });
-    }, [state.search, dispatch]);
+    }, [state.search, dispatch, allListings]);
 
-
-
-
-
-    //related to the sorting
+    // مرتبط با مرتب‌سازی
     useEffect(() => {
         const filteredListings = () => {
             if (state.sort === "روزترین") {
-                // console.log("Sorting by به روزترین آگهی");
                 return allListings;
             } else if (state.sort === "کمترین") {
-                // console.log("Sorting by کمترین قیمت");
                 return allListings.slice().sort((a, b) => {
                     const priceA = parseInt(a.price_for_sale);
                     const priceB = parseInt(b.price_for_sale);
@@ -141,7 +138,6 @@ function ListingList({ allListings }) {
                 });
             }
             else if (state.sort === "بیشترین") {
-                // console.log("Sorting by بیشترین قیمت");
                 return allListings.slice().sort((a, b) => {
                     const priceA = parseInt(a.price_for_sale);
                     const priceB = parseInt(b.price_for_sale);
@@ -150,19 +146,13 @@ function ListingList({ allListings }) {
             }
         };
         const sortedListings = filteredListings();
-        // console.log("Sorted Listings:", sortedListings);
         dispatch({
             type: "sortByChange",
             sortByChangeChose: sortedListings,
         });
     }, [state.sort, dispatch, allListings]);
 
-
-
-
-
-
-    ///related to the category filtering
+    /// مرتبط با دسته‌بندی
     function filteredCategoryListings(cat) {
         if (cat === "همه") {
             return allListings;
@@ -178,12 +168,7 @@ function ListingList({ allListings }) {
         });
     };
 
-
-
-
-
-
-    //related to the boroughs
+    // مرتبط با محله‌ها
     useEffect(() => {
         function filteredBoroughListings(bro) {
             if (bro === "همه") {
@@ -198,12 +183,7 @@ function ListingList({ allListings }) {
         });
     }, [state.borough, dispatch, allListings]);
 
-
-
-
-
-
-    //related to price
+    // مرتبط با قیمت
     function filteredPriceListings() {
         return allListings.filter(listing => parseInt(listing.price_for_sale) <= state.price);
     }
@@ -216,38 +196,25 @@ function ListingList({ allListings }) {
         });
     }, [state.price, dispatch, allListings]);
 
-
-
-    
     const cleareFilter = () => {
-        setCategory("همه")
+        setCategory("همه");
         dispatch({
             type: "cleareFilter"
-        })
-    }
-
-
+        });
+    };
 
     const toggleFilter = () => {
         setShowFilter(!showFilter);
     };
 
-
-
-
-
     return (
         <div className={styles.listingList}>
-
-
             <div className={styles.top}>
-
                 <div className={styles.icons}>
                     <Button variant="outlined" startIcon={<BsFillGridFill size={25} color="#e10a1d" />}>
                         <b>{digitsEnToFa(state.filteredListings.length)}</b> ملک یافت شد
                     </Button>
                 </div>
-
 
                 <div className={styles.filterTitlrIcon}
                     onClick={toggleFilter}>
@@ -255,16 +222,13 @@ function ListingList({ allListings }) {
                         <Button variant="outlined" startIcon={<FaCogs size={25} color="#ccc" />}>
                             بستن فیلتر
                         </Button>
-
                     )
                         :
                         (
                             <Button variant="outlined" startIcon={<FaCogs size={25} color="#ccc" />}>
                                 نمایش فیلتر
                             </Button>
-
                         )}
-
                 </div>
 
                 {showFilter &&
@@ -286,8 +250,6 @@ function ListingList({ allListings }) {
                             })}
                         </div>
 
-
-
                         <div className={styles.brand}>
                             <div className={styles.brandTitle}>
                                 <span>محله ها:</span>
@@ -308,39 +270,14 @@ function ListingList({ allListings }) {
                                 })}
                             </select>
 
-
-                            {/* <div className={styles.priceContainer}>
-                                <div className={styles.priceTitle}>
-                                    <span>قیمت:</span>
-                                    <span>{`${state.price}تومان`}</span>
-                                </div>
-                                <div className={styles.price}>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="2000000000000"
-                                        value={state.price}
-                                        onChange={(e) =>
-                                            dispatch({
-                                                type: "catchPriceChange",
-                                                priceChose: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div> */}
                             <br />
                             <button
-                                variant="outlined"
                                 onClick={cleareFilter}>
                                 حذف فیلتر
                             </button>
-
                         </div>
                     </div>
                 }
-
-
 
                 <div className={styles.searchIcon}>
                     <Search
@@ -351,7 +288,6 @@ function ListingList({ allListings }) {
                         })}
                     />
                 </div>
-
 
                 <div className={styles.sort}>
                     <label> ترتیب بر اساس:</label>
@@ -388,8 +324,6 @@ function ListingList({ allListings }) {
                         })}
                     </div>
 
-
-
                     <div className={styles.brand}>
                         <div className={styles.brandTitle}>
                             <span>محله ها:</span>
@@ -410,60 +344,44 @@ function ListingList({ allListings }) {
                             })}
                         </select>
 
-
-                        {/* <div className={styles.priceContainer}>
-                            <div className={styles.priceTitle}>
-                                <span>قیمت:</span>
-                                <span>{`${digitsEnToFa(state.price)}تومان`}</span>
-                                <span>{`${numberToWords(state.price)}تومان`}</span> 
-                            </div>
-                            <div className={styles.price}>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max="200000000000"
-                                    value={state.price}
-                                    onChange={(e) =>
-                                        dispatch({
-                                            type: "catchPriceChange",
-                                            priceChose: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-                        </div> */}
                         <br />
                         <button
                             onClick={cleareFilter}>
                             حذف فیلتر
                         </button>
-
                     </div>
                 </div>
 
                 <div className={styles.grid}>
-                    {allListings.lenght === 0 ? (
+                    {allListings.length === 0 ? (
                         <p>آگهی یافت نشد</p>
                     )
                         :
                         (
                             <>
-                                {state.filteredListings.map((listing) => {
-                                    return (
-                                        <ListingContainer key={listing.id}>
-                                            <ListingCard listing={listing} />
-                                        </ListingContainer>
-                                    );
-                                })}
+                                {currentListings.map((listing) => (
+                                    <ListingCard key={listing.id} listing={listing} />
+                                ))}
                             </>
+
                         )
                     }
                 </div>
+
             </div>
 
-
+            <div className={styles.paginationContainer}>
+                <Pagination
+                    count={Math.ceil(state.filteredListings.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handleChangePage}
+                    color="primary"
+                    showFirstButton
+                    showLastButton
+                />
+            </div>
         </div>
     )
 }
 
-export default ListingList
+export default ListingList;

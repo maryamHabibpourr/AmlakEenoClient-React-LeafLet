@@ -95,10 +95,11 @@
         }
         .cardConetntListing{
             width: 40%;
-            max-height: 510px;
+            max-height: 530px !important;
+            overflow-y: auto; 
+            scrollbar-width: thin; 
             padding: 10px 30px;
             background-color: #fff;
-            max-height: fit-content;
             border-top: 5px solid var( --color-red);
             h5{
                 font-size: 1rem;

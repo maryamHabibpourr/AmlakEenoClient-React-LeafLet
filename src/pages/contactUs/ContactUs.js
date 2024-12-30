@@ -51,7 +51,7 @@ function ContactUs() {
                 <div className={styles.contentOntactus}>
                     <h4>تماس با ما</h4>
                     <p>هم وطن عزیز! شما از طریق ما می توانید املاک و مستغلات مورد علاقه خود را بیابید و سپس مشورت نمایید و بعد از کسب اطلاعات لازم خریداری یا اجاره نمایید. </p>
-                    {/* <span>شماره تماس: ۰۲۱۲۵۲۱</span> */}
+                    <span>شماره تماس: ۰۲۱۲۵۲۱</span>
                     <Button onClick={handleRefresh}
                         variant="outlined"
                         endIcon={<ArrowBackIcon

@@ -5,7 +5,7 @@ import { useImmerReducer } from "use-immer";
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 
 //react leafLet
-import { MapContainer, TileLayer, Marker, useMap, Polygon} from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, useMap, Polygon } from 'react-leaflet'
 
 //component
 import { Login, Register } from '../../pages';
@@ -27,7 +27,8 @@ import {
   Checkbox,
   FormControlLabel,
   Divider,
-  Chip
+  Chip,
+  MenuItem
 } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 
@@ -51,23 +52,71 @@ import {
   HouseDocumentTypeOptions,
   AdvertiserTypeOptions,
 } from "./DataProperty"
-
-import Farmanieh from "./Boroughs/Farmanie"
-import Enghelab from "./Boroughs/Enghelab"
-import Darabad from "./Boroughs/Daraabad"
 import Card from "../card/Card";
 import { Map } from "leaflet";
-
-
-
 //persian tools
 import { digitsEnToFa } from "@persian-tools/persian-tools";
+
+
+
+import Region1 from "./Boroughs/Region1";
+import Region2 from "./Boroughs/Region2";
+import Region3 from "./Boroughs/Region3";
+import Region4 from "./Boroughs/Region4";
+import Region5 from "./Boroughs/Region5";
+import Region6 from "./Boroughs/Region6";
+import Region7 from "./Boroughs/Region7";
+import Region8 from "./Boroughs/Region8";
+import Region9 from "./Boroughs/Region9";
+import Region10 from "./Boroughs/Region10";
+import Region11 from "./Boroughs/Region11";
+import Region12 from "./Boroughs/Region12";
+import Region13 from "./Boroughs/Region13";
+import Region14 from "./Boroughs/Region14";
+import Region15 from "./Boroughs/Region15";
+import Region16 from "./Boroughs/Region16";
+import Region17 from "./Boroughs/Region17";
+import Region18 from "./Boroughs/Region18";
+import Region19 from "./Boroughs/Region19";
+import Region20 from "./Boroughs/Region20";
+import Region21 from "./Boroughs/Region21";
+import Region22 from "./Boroughs/Region22";
+
+
+// یک شیء برای نگاشت نام مناطق به فایل‌هایشان
+const regionsMap = {
+  "منطقه 1": Region1,
+  "منطقه 2": Region2,
+  "منطقه 3": Region3,
+  "منطقه 4": Region4,
+  "منطقه 5": Region5,
+  "منطقه 6": Region6,
+  "منطقه 7": Region7,
+  "منطقه 8": Region8,
+  "منطقه 9": Region9,
+  "منطقه 10": Region10,
+  "منطقه 11": Region11,
+  "منطقه 12": Region12,
+  "منطقه 13": Region13,
+  "منطقه 14": Region14,
+  "منطقه 15": Region15,
+  "منطقه 16": Region16,
+  "منطقه 17": Region17,
+  "منطقه 18": Region18,
+  "منطقه 19": Region19,
+  "منطقه 20": Region20,
+  "منطقه 21": Region21,
+  "منطقه 22": Region22,
+};
+
+
+
 
 
 const useStyles = makeStyles({
   registrationStyle: {
     backgroundColor: "green !important",
-    border:"green !important",
+    border: "green !important",
     color: "white !important",
     fontSize: "1rem",
     marginLeft: "1rem",
@@ -80,11 +129,14 @@ const useStyles = makeStyles({
     color: "black !important",
     fontSize: "0.8rem",
     marginLeft: "1rem",
-    marginBottom:"15px",
+    marginBottom: "15px",
     border: "2px dotted red !important",
   },
 
 })
+
+
+
 
 
 
@@ -574,50 +626,106 @@ function AddProperty() {
 
 
   // Changing the map view depending on the chosen borough
+  // useEffect(() => {
+  //   if (state.boroughValue === "فرمانیه") {
+  //     state.mapInstance.setView([35.80312057971126, 51.45993572439373], 16);
+  //     dispatch({
+  //       type: "changeMarkerPosition",
+  //       changeLatitude: 35.80312057971126,
+  //       changeLongitude: 51.45993572439373,
+  //     });
+  //   } else if (state.boroughValue === "تجریش") {
+  //     state.mapInstance.setView([35.80556314471572, 51.43054224411855], 16);
+  //     dispatch({
+  //       type: "changeMarkerPosition",
+  //       changeLatitude: 35.80556314471572,
+  //       changeLongitude: 51.43054224411855,
+  //     });
+  //   } else if (state.boroughValue === "داراآباد") {
+  //     state.mapInstance.setView([35.818784395704725, 51.49073180628075], 16);
+  //     dispatch({
+  //       type: "changeMarkerPosition",
+  //       changeLatitude: 35.818784395704725,
+  //       changeLongitude: 51.49073180628075,
+  //     });
+  //   } else if (state.boroughValue === "میدان انقلاب") {
+  //     state.mapInstance.setView([35.70081946995089, 51.39126620349126], 16);
+  //     dispatch({
+  //       type: "changeMarkerPosition",
+  //       changeLatitude: 35.70081946995089,
+  //       changeLongitude: 51.39126620349126,
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [state.boroughValue])
+
+
+
+  const regionCoordinates = {
+    "منطقه 1": [35.828161260292845, 51.46357972220065],
+    "منطقه 2": [35.80370386098121, 51.36160582018843],
+    "منطقه 3": [35.7915143425377, 51.407713849030095],
+    "منطقه 4": [35.776037346638915, 51.53764036323443],
+    "منطقه 5": [35.804988529675896, 51.34086127053721],
+    "منطقه 6": [35.7515339473954, 51.41738771570738],
+    "منطقه 7": [35.74160894908976, 51.44705056445636],
+    "منطقه 8": [35.73638803064333, 51.48770799453785],
+    "منطقه 9": [35.7019998084633, 51.33795197329218],
+    "منطقه 10": [35.70084935245479, 51.3781800458907],
+    "منطقه 11": [35.70124825348167, 51.412948122280774],
+    "منطقه 12": [35.7018132412606, 51.44731573266675],
+    "منطقه 13": [35.72461216108969, 51.56764030590653],
+    "منطقه 14": [35.66269458656694, 51.49083360170447],
+    "منطقه 15": [35.66135019024801, 51.45507228241473],
+    "منطقه 16": [35.65935799716561, 51.43072114000076],
+    "منطقه 17": [35.667629315884426, 51.38175803447343],
+    "منطقه 18": [35.67711839642643, 51.268676710643476],
+    "منطقه 19": [35.64316087805245, 51.392923767551096],
+    "منطقه 20": [35.62772821788326, 51.453323064116766],
+    "منطقه 21": [35.743311351862594, 51.10022352156877],
+    "منطقه 22": [35.776839222025856, 51.264619972936565],
+  };
+
+
+
   useEffect(() => {
-    if (state.boroughValue === "فرمانیه") {
-      state.mapInstance.setView([35.80312057971126, 51.45993572439373], 16);
+    const selectedCoordinates = regionCoordinates[state.boroughValue];
+    if (selectedCoordinates && state.mapInstance) {
+      state.mapInstance.setView(selectedCoordinates, 12);
       dispatch({
         type: "changeMarkerPosition",
-        changeLatitude: 35.80312057971126,
-        changeLongitude: 51.45993572439373,
-      });
-    } else if (state.boroughValue === "تجریش") {
-      state.mapInstance.setView([35.80556314471572, 51.43054224411855], 16);
-      dispatch({
-        type: "changeMarkerPosition",
-        changeLatitude: 35.80556314471572,
-        changeLongitude: 51.43054224411855,
-      });
-    } else if (state.boroughValue === "داراآباد") {
-      state.mapInstance.setView([35.818784395704725, 51.49073180628075], 16);
-      dispatch({
-        type: "changeMarkerPosition",
-        changeLatitude: 35.818784395704725,
-        changeLongitude: 51.49073180628075,
-      });
-    } else if (state.boroughValue === "میدان انقلاب") {
-      state.mapInstance.setView([35.70081946995089, 51.39126620349126], 16);
-      dispatch({
-        type: "changeMarkerPosition",
-        changeLatitude: 35.70081946995089,
-        changeLongitude: 51.39126620349126,
+        changeLatitude: selectedCoordinates[0],
+        changeLongitude: selectedCoordinates[1],
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.boroughValue])
+  }, [state.boroughValue, state.mapInstance]);
+
+
+
 
 
   //Borough Disply function#########################################
+  // function BoroughDisplay() {
+  //   if (state.boroughValue === "فرمانیه") {
+  //     return <Polygon positions={Farmanieh} />;
+  //   } else if (state.boroughValue === "میدان انقلاب") {
+  //     return <Polygon positions={Enghelab} />;
+  //   } else if (state.boroughValue === "داراآباد") {
+  //     return <Polygon positions={Darabad} />;
+  //   }
+  // }
+
+
+
+
   function BoroughDisplay() {
-    if (state.boroughValue === "فرمانیه") {
-      return <Polygon positions={Farmanieh} />;
-    } else if (state.boroughValue === "میدان انقلاب") {
-      return <Polygon positions={Enghelab} />;
-    } else if (state.boroughValue === "داراآباد") {
-      return <Polygon positions={Darabad} />;
+    const selectedRegion = regionsMap[state.boroughValue];
+    if (selectedRegion) {
+      return <Polygon positions={selectedRegion} />;
     }
+    return null;
   }
+
 
 
 
@@ -924,7 +1032,7 @@ function AddProperty() {
           variant='outlined'
           fullWidth
           className={classes.registrationStyle}
-          onClick={()=>setLoginOpen(true)}
+          onClick={() => setLoginOpen(true)}
         >
           برای ثبت ملک، ابتدا ورود نمایید.
         </Button>
@@ -963,7 +1071,7 @@ function AddProperty() {
           </Grid>
 
           <Divider >
-            <Chip label="اطلاعات مهم اولیه" style={{ backgroundColor: "#fff",border:"1px solid red", fontSize: "15px" }} />
+            <Chip label="اطلاعات مهم اولیه" style={{ backgroundColor: "#fff", border: "1px solid red", fontSize: "15px" }} />
           </Divider>
 
           <Grid item container justifyContent="space-between">
@@ -995,12 +1103,21 @@ function AddProperty() {
 
                 select
                 SelectProps={{
-                  native: true,
-                }}>
+                  native: false, // اینجا گزینه native غیرفعال است
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", // تنظیم راست‌چین متن
+                        paddingRight: "10px", // تنظیم فاصله داخلی
+                      },
+                    },
+                  },
+                }}
+              >
                 {bargainTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -1032,12 +1149,21 @@ function AddProperty() {
 
                 select
                 SelectProps={{
-                  native: true,
-                }}>
+                  native: false, // اینجا گزینه native غیرفعال است
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", // تنظیم راست‌چین متن
+                        paddingRight: "10px", // تنظیم فاصله داخلی
+                      },
+                    },
+                  },
+                }}
+              >
                 {listingTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -1070,12 +1196,21 @@ function AddProperty() {
 
                 select
                 SelectProps={{
-                  native: true,
-                }}>
+                  native: false, 
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", 
+                        paddingRight: "10px", 
+                      },
+                    },
+                  },
+                }}
+              >
                 {propertyTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -1106,16 +1241,23 @@ function AddProperty() {
 
                 error={state.roomNumberErrors.hasErrors ? true : false}
                 helperText={state.roomNumberErrors.errorMessage}
-
-
-                select
+                select    
                 SelectProps={{
-                  native: true,
-                }}>
+                  native: false, 
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", 
+                        paddingRight: "10px", 
+                      },
+                    },
+                  },
+                }}
+              >
                 {RoomNumberOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
 
               </TextField>
@@ -1253,16 +1395,24 @@ function AddProperty() {
                     buildingFaceChose: e.target.value
                   })}
 
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {BuildingFaceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {BuildingFaceOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
           </Grid>
@@ -1290,17 +1440,24 @@ function AddProperty() {
                   })}
                 error={state.areaErrors.hasErrors ? true : false}
                 helperText={state.areaErrors.errorMessage}
-
-                select
+                  
+                select    
                 SelectProps={{
-                  native: true,
+                  native: false, 
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", 
+                        paddingRight: "10px", 
+                      },
+                    },
+                  },
                 }}
-
               >
                 {areaOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -1309,7 +1466,7 @@ function AddProperty() {
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="borough"
-                label="محله*"
+                label="منطقه*"
                 variant="standard"
                 inputProps={{ style: { fontSize: 15 } }}
                 InputLabelProps={{ style: { fontSize: 17 } }}
@@ -1328,18 +1485,24 @@ function AddProperty() {
                   })}
                 error={state.boroughErrors.hasErrors ? true : false}
                 helperText={state.boroughErrors.errorMessage}
-
-                select
+                select    
                 SelectProps={{
-                  native: true,
+                  native: false, 
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", 
+                        paddingRight: "10px", 
+                      },
+                    },
+                  },
                 }}
               >
                 {boroughOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
-
               </TextField>
             </Grid>
           </Grid>
@@ -1347,12 +1510,12 @@ function AddProperty() {
           <Grid item style={{ marginTop: "1rem" }}>
             {state.latitudeValue && state.longitudeValue ?
               <Alert severity="success"
-                style={{  padding: "20px", fontSize: "12", fontFamily: "YekanBakh", fontWeight: "500" }}>
+                style={{ padding: "20px", fontSize: "12", fontFamily: "YekanBakh", fontWeight: "500" }}>
                 محله شما قرار دارد در  {state.latitudeValue} , {state.longitudeValue}
               </Alert>
               :
               <Alert severity="warning"
-                style={{  padding: "20px", fontSize: "14", fontFamily: "YekanBakh", fontWeight: "700" }}>
+                style={{ padding: "20px", fontSize: "14", fontFamily: "YekanBakh", fontWeight: "700" }}>
                 توجه! توجه!
                 لطفاً روی نقشه با درگ کردن نشان محل سکونت خود را مشخص نمایید.
               </Alert>
@@ -1360,7 +1523,7 @@ function AddProperty() {
           </Grid>
 
           <div className={styles.mapContainer}>
-            <MapContainer  center={[35.73087557318668, 51.35107070174615]} zoom={16} scrollWheelZoom={true}
+            <MapContainer center={[35.73087557318668, 51.35107070174615]} zoom={16} scrollWheelZoom={true}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -1376,9 +1539,9 @@ function AddProperty() {
             </MapContainer>
           </div>
 
-    
-          <Divider style={{ margin: "10px 0px", color:"red" }}>
-            <Chip label="اطلاعات مهم ثانویه" style={{ backgroundColor: "#fff",border:"1px solid red", fontSize: "15px" }} />
+
+          <Divider style={{ margin: "10px 0px", color: "red" }}>
+            <Chip label="اطلاعات مهم ثانویه" style={{ backgroundColor: "#fff", border: "1px solid red", fontSize: "15px" }} />
           </Divider>
 
           <Grid item container justifyContent="space-between">
@@ -1488,17 +1651,24 @@ function AddProperty() {
                     propertyStatusChose: e.target.value
                   })}
 
-                select
-                SelectProps={{
-                  native: true,
-                }}
-
-              >
-                {propertyStatusOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {propertyStatusOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
           </Grid>
@@ -1601,7 +1771,7 @@ function AddProperty() {
           </Grid>
 
           <Divider>
-            <Chip label="اطلاعات جانبی" style={{ backgroundColor: "#fff",border:"1px solid red", fontSize: "15px" }} />
+            <Chip label="اطلاعات جانبی" style={{ backgroundColor: "#fff", border: "1px solid red", fontSize: "15px" }} />
           </Divider>
 
 
@@ -1623,15 +1793,24 @@ function AddProperty() {
                     buildingApearenceChose: e.target.value
                   })}
 
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {BuildingApearenceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {BuildingApearenceOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
 
@@ -1652,19 +1831,26 @@ function AddProperty() {
                     floorCoveringChose: e.target.value
                   })}
 
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {FloorCoveringOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {FloorCoveringOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
-
           </Grid>
 
           <Grid item container justifyContent="space-between">
@@ -1684,16 +1870,25 @@ function AddProperty() {
                     type: 'catchwcTypechange',
                     wcTypeChose: e.target.value
                   })}
-
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {WcTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
+  
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {WcTypeOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
             <Grid item xs={12} md={5}
@@ -1712,17 +1907,25 @@ function AddProperty() {
                     type: 'catchKitchenApearencechange',
                     kitchenApearenceChose: e.target.value
                   })}
-
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {KitchenApearenceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-
+                                    
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {KitchenApearenceOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
 
@@ -1747,16 +1950,24 @@ function AddProperty() {
                     heatingSystemChose: e.target.value
                   })}
 
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {HeatingSystemOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {HeatingSystemOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
             <Grid item xs={12} md={5}
@@ -1775,17 +1986,24 @@ function AddProperty() {
                     type: 'catchCoolingSystemChange',
                     coolingSystemChose: e.target.value
                   })}
-
-                select
-                SelectProps={{
-                  native: true,
-                }}>
-                {coolingSystemOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-
+                  select    
+                  SelectProps={{
+                    native: false, 
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right", 
+                          paddingRight: "10px", 
+                        },
+                      },
+                    },
+                  }}
+                >
+                  {coolingSystemOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
               </TextField>
             </Grid>
           </Grid>
@@ -1807,16 +2025,24 @@ function AddProperty() {
                       type: 'catchHouseDocumentStatusChange',
                       houseDocumentStatusChose: e.target.value
                     })}
-
-                  select
-                  SelectProps={{
-                    native: true,
-                  }}>
-                  {houseDocumentStatusOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
+                    select    
+                    SelectProps={{
+                      native: false, 
+                      MenuProps: {
+                        PaperProps: {
+                          style: {
+                            textAlign: "right", 
+                            paddingRight: "10px", 
+                          },
+                        },
+                      },
+                    }}
+                  >
+                    {houseDocumentStatusOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
                 </TextField>
               </Grid>
               <Grid item xs={12} md={5}
@@ -1836,17 +2062,24 @@ function AddProperty() {
                       houseDocumentTypeChose: e.target.value
                     })}
 
-                  select
-                  SelectProps={{
-                    native: true,
-                  }}
-
-                >
-                  {HouseDocumentTypeOptions.map((option) => (
-                    <option key={option.value} value={option.value} >
-                      {option.label}
-                    </option>
-                  ))}
+                    select    
+                    SelectProps={{
+                      native: false, 
+                      MenuProps: {
+                        PaperProps: {
+                          style: {
+                            textAlign: "right", 
+                            paddingRight: "10px", 
+                          },
+                        },
+                      },
+                    }}
+                  >
+                    {HouseDocumentTypeOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
 
                 </TextField>
               </Grid>
@@ -1895,14 +2128,22 @@ function AddProperty() {
 
                 select
                 SelectProps={{
-                  native: true,
-                }}>
+                  native: false, // اینجا گزینه native غیرفعال است
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right", // تنظیم راست‌چین متن
+                        paddingRight: "10px", // تنظیم فاصله داخلی
+                      },
+                    },
+                  },
+                }}
+              >
                 {AdvertiserTypeOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                  </option>
+                  </MenuItem>
                 ))}
-
               </TextField>
             </Grid>
           </Grid>

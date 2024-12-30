@@ -16,11 +16,13 @@ export const cacheRtl = createCache({
 });
 
 
+
+
 export const theme = createTheme({
   direction: 'rtl',
   palette: {
     primary: {
-      main: '#b71c1c',
+      main: '#e10a1d',
     },
     secondary: {
       main: '#b71c1c',

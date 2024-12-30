@@ -192,6 +192,9 @@ const Register = ({ setRegisterOpen, setLoginOpen }) => {
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
 
 
+
+
+  
   const formSubmit = (e) => {
     e.preventDefault();
     if (
@@ -205,6 +208,8 @@ const Register = ({ setRegisterOpen, setLoginOpen }) => {
     }
   }
 
+  
+  
   useEffect(() => {
     if (state.sendRequest) {
       const source = Axios.CancelToken.source();
@@ -227,7 +232,6 @@ const Register = ({ setRegisterOpen, setLoginOpen }) => {
         } catch (error) {
           dispatch({ type: 'allowTheButton' })
           // console.log(error.response)
-
           if (error.response.data.username) {
             dispatch({ type: "usernameExists" })
           }
@@ -255,6 +259,8 @@ const Register = ({ setRegisterOpen, setLoginOpen }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.sendRequest],)
+
+
 
 
   //SETTING FOR SNACKBAR

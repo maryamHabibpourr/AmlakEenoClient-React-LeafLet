@@ -91,6 +91,8 @@ function Header() {
     }
   }
 
+
+  
   //SETTING FOR SNACKBAR
   useEffect(() => {
     if (openSnack) {
@@ -217,7 +219,6 @@ function Header() {
         </div>
 
 
-
         <div>
           {openAccount ? closeIcon : userIcon}
           {openAccount &&
@@ -228,7 +229,6 @@ function Header() {
                 transition={{ delay: 0.7 }}
               >
                 {GlobalState.userIsLogged ? (
-
                   <div className={styles.subMenuContentContainer}>
                     <h1>حساب کابری من</h1>
                     <div className={styles.subMenuborderContainer}>
@@ -238,7 +238,6 @@ function Header() {
                         <Link onClick={HandleLogout}><BiSolidExit size={30} />خروج</Link>
                       </div>
                     </div>
-
                     <div className={styles.subMenuListContainer} onClick={openMenu}  >
                       <div className={styles.subMenuListContainerDiv}>
                         <Link><CgChevronRight size={20} /></Link>
@@ -250,7 +249,6 @@ function Header() {
                       </div>
                     </div>
                   </div>
-
 
                 )
                   :

@@ -25,38 +25,32 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
-        z-index: 99;
-        margin: auto;
-        @media(max-width:500px){
-            width: calc(100% - 5%);
-        }
+        padding-bottom: 20px;
+        // align-items:center;
         .cardContainer {
             width: 270px;
             height: 310px;
             overflow: hidden;
             background-color: #fff;
             text-align: right;
-            margin-bottom: 20px;
+            margin: 6px;
             cursor: pointer;
-            margin-right: 20px;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 4px 20px -2px,
               rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
             &:hover{
               text-decoration: underline;   
             }
-            @media(max-width : 450px){
-                margin-left: auto;
-                margin-right: auto;
+            @media(max-width : 500px){
+              width: calc(100% - 20px)
+                
             }
             .containerCardOne{
-              width:270px;
               height: 170px;
-              overflow: hidden;
               margin-bottom: 10px;
                 img{
                     width: 100%;
                     height: 170px;
+                    object-fit: cover;
                     &:hover{
                         filter: brightness(30%); 
                     }
@@ -117,7 +111,7 @@
       border-radius: 50px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       z-index:999;
-      background-color: gary;
+      background-color: #82050f;
       cursor: pointer;
       margin-bottom: 20px;
       @media(max-width:700px){
@@ -134,16 +128,16 @@
         align-items: center;
         justify-content: center;
         font-family: YekanBakh;
-        border: 1px solid gray;
-        background-color: gray;
+        border: 1px solid #82050f;
+        background-color: #82050f;
         font-weight: 300;
         font-size: 1rem;
         color: #fff;
         border-radius: 50px;
         cursor: pointer;
         &:hover{
-          background-color: #82050f;
-          border: 1px solid #82050f;
+          background-color: gray;
+          border: 1px solid gray;
           transition: all 0.3s ease-in;
           transform: translateX(5px);
         }

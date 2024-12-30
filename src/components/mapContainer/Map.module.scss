@@ -3,7 +3,18 @@
     @media screen and (max-width : 1000px) {
         display: none;
     }
-    
+
+    .circle {
+      fill: none;
+      stroke : red;
+      stroke-width:2px;
+      transition: stroke-width .5s;
+      animation: colorChange .8s infinite; 
+      cursor: pointer !important; 
+      &:hover{
+        stroke-width:7px;
+      }
+    }
 }
 
 .customPopup {
@@ -28,3 +39,30 @@
         font-family:YekanBakh ;
     }
   }
+
+
+  @keyframes colorChange {
+    0% {
+      stroke: red;
+    }
+    25% {
+      stroke: white;
+    }
+    50% {
+      stroke: red;
+    }
+    75% {
+      stroke: yellow;
+    }
+    100% {
+      stroke: red;
+    }
+  }
+  
+
+
+
+
+
+
+  

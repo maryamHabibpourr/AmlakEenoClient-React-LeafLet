@@ -71,7 +71,6 @@ function Profile() {
     const GlobalState = useContext(StateContext)
 
 
-
     const initialState = {
         userProfile: {
             agencyName: "",
@@ -80,6 +79,7 @@ function Profile() {
             bio: "",
             sellerId: "",
             sellerListings: [],
+
         },
         dataIsLoading: true,
     }
@@ -96,7 +96,6 @@ function Profile() {
                 draft.userProfile.sellerListings = action.profileObject.seller_listings;
                 draft.userProfile.sellerId = action.profileObject.seller
                 break
-
 
             case "loadingDone":
                 draft.dataIsLoading = false
@@ -129,6 +128,7 @@ function Profile() {
     }, [])
 
 
+    
 
 
     function PropertiesDispaly() {

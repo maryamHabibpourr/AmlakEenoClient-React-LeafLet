@@ -3,30 +3,78 @@ import { motion } from "framer-motion"
 
 
 
-export const ListingContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    @media(max-width: 1200px){
-        margin: auto;    
-    }
-`
+// export const ListingContainer = styled.div`
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     align-items: center;
+//     @media(max-width: 1200px){
+//         margin: auto;    
+//     }
+// `
 
-export const Card = styled(motion.div)`
-    height:420px;
-    width:260px;
-    margin:2px;
-    background-color:#ffffff;
-    border-radius:5px;
-    overflow: hidden;
-    cursor:pointer;
-    transition: all .3s aese-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    @media(max-width: 500px){
-        width:calc(100% - 20px)
+
+
+export const CardWrapper = styled.div`
+  position: relative;
+  margin: 2px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 255px;
+  height: 420px;
+
+  
+  @media (max-width: 500px) {
+    width: calc(100% - 2px);
+    height: auto; 
+
+    &::before {
+      content: '';
+      display: block;
+      padding-bottom: 133.3333%;  /* معادل 4/3 × 100% */
     }
-`
+  }
+`;
+
+// ۲. محتوای درونی کارت
+export const CardInner = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  padding-top:3px;
+
+  @media (max-width: 500px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-top:0px;
+  }
+`;
+
+
+
+// export const Card = styled(motion.div)`
+//     height:420px;
+//     max-width:255px;
+//     margin:2px;
+//     background-color:#ffffff;
+//     aspect-ratio: 3 / 4; 
+//     border-radius:5px;
+//     overflow: hidden;
+//     cursor:pointer;
+//     transition: all 0.3s ease-in-out; 
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+//     @media(max-width: 500px){
+//         max-width: calc(100% - 2px);
+//         aspect-ratio: 3 / 4; 
+//     }
+// `
+
 
 export const CardMedia = styled(motion.div)`
     height: 220px;
@@ -35,6 +83,7 @@ export const CardMedia = styled(motion.div)`
     border-radius: 5px;
     overflow: hidden;
     margin-bottom:20px;
+
 
 
     &::before {
@@ -57,6 +106,8 @@ export const CardMedia = styled(motion.div)`
     }
 
 `
+
+
 
 export const Status = styled.span`
     font-size:1rem;
@@ -163,6 +214,7 @@ export const TagsCta = styled(motion.div)`
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:1px;
 `
 
 export const Tags = styled.div`
@@ -176,6 +228,7 @@ export const Tags = styled.div`
     font-size:12px;
     background-color: #5142fc;
     text-transform: uppercase;
+    cursor : pointer;
     &:hover{
         color:#fff;
     }

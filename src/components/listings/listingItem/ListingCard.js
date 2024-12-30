@@ -1,107 +1,95 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useImmerReducer } from 'use-immer';
 
-//styled component 
+// استایل‌ها را از فایل بالا ایمپورت می‌کنیم:
 import {
-  Card, CardBody,
-  CardMedia, CardTitle, CtaGrp, CtaLink,
-  MetaInfo, MetaList, PicLength,
-  Price, PriceInfo, PriceText, Status,
-  CardTitleInfo, Tags, TagsCta, Date
-} from './ListingCardStyle'
+  CardWrapper,
+  CardInner,
+  CardMedia,
+  CardBody,
+  CardTitle,
+  CardTitleInfo,
+  MetaInfo,
+  MetaList,
+  TagsCta,
+  Tags,
+  CtaGrp,
+  CtaLink,
+  Price,
+  PriceInfo,
+  PriceText,
+  Status,
+  Date,
+  PicLength
+} from './ListingCardStyle';
 
+// ری‌اکت آیکون‌ها
+import { MdLocationOn } from "react-icons/md";
+import { AiOutlineCamera } from "react-icons/ai";
 
-//react-icons
-import { MdLocationOn } from "react-icons/md"
-import {AiOutlineCamera} from "react-icons/ai"
+// دارایی‌ها (عکس پیش‌فرض)
+import cam from "../../../assets/camera.jpg";
 
-//assets
-// import camera from "../../../assets/camera.jpg"
-
-import cam from "../../../assets/camera.jpg"
-
-
-//date
+// کتابخانه‌های جانبی برای تاریخ جلالی، مپ، کانتکست و ...:
 import moment from 'jalali-moment';
-
-//mui
-import { Grid, IconButton, } from '@mui/material'
+import { Grid, IconButton } from '@mui/material';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 
-
-//react leafLet
-import { MapContainer, TileLayer } from 'react-leaflet'
-import { Marker, useMap } from 'react-leaflet'
-
-
-//Context
+// کانتکست پروژه
 import DispatchContext from "../../../Context/DispatchContext";
 import StateContext from "../../../Context/StateContext";
 
-//component
-import { Login, Register } from '../../../pages';
-import { MediaSharing } from "../../../pages"
+// سایر کامپوننت‌ها و پاپ‌آپ‌ها
+import { Login, Register, MediaSharing } from "../../../pages";
 
-//Mui ICons
+// آیکون‌های بوک‌مارک، لایک و ...
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-//copy
+// برای کپی لینک
 import LinkComponent from "../../linkComponent/LinkComponent";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-
-//persian tools
-import { addCommas , digitsEnToFa, numberToWords } from "@persian-tools/persian-tools";
-
+// تبدیل اعداد انگلیسی به فارسی و افزودن کاما
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
 
 
 const ListingCard = ({ listing }) => {
-
-  const GlobalDispatch = useContext(DispatchContext)
-  const GlobalState = useContext(StateContext)
+  const GlobalDispatch = useContext(DispatchContext);
+  const GlobalState = useContext(StateContext);
 
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false);
 
-
-  const [isHovered, setHovered] = useState(false)
-  const animateCardMedia = isHovered ? { height: "0" } : { height: "270px" }
+  // کنترل Hover برای انیمیشن
+  const [isHovered, setHovered] = useState(false);
+  const animateCardMedia = isHovered ? { height: "0" } : { height: "270px" };
   const showMeta = { opacity: 1, height: "auto" };
   const hideMeta = { opacity: 0, height: 0 };
   const animateMeta = isHovered ? hideMeta : showMeta;
-  const animateMetaList = isHovered ? showMeta : hideMeta
-
-
+  const animateMetaList = isHovered ? showMeta : hideMeta;
 
   const transition = {
     duration: 0.25,
     type: "spring",
     bounce: 0.2,
     ease: "easeIn",
+  };
 
-  }
-
-
-
+  // لینک آگهی جهت اشتراک‌گذاری
   const link = `https://amlakeeno.ir/listings/${listing.id}`;
-
-
-
-
 
   const initialState = {
     mapInstance: null,
-  }
-
+  };
 
   function ReducerFunction(draft, action) {
-    // eslint-disable-next-line default-case
     switch (action.type) {
       case "getMap":
         draft.mapInstance = action.mapData;
@@ -111,76 +99,56 @@ const ListingCard = ({ listing }) => {
     }
   }
 
-
-  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
-
-
-
+  const [state, dispatch] = useImmerReducer(ReducerFunction, initialState);
 
   function TheMapComponent() {
-    const map = useMap()
-    dispatch({ type: 'getMap', mapData: map })
+    const map = useMap();
+    dispatch({ type: 'getMap', mapData: map });
     return null;
   }
 
-
-
-  // Check if the item is already in the cart when logging in
+  // بررسی اینکه آیا قبلاً در بوک‌مارک‌های کاربر بوده یا نه
   useEffect(() => {
     const itemInCart = GlobalState.cartItems.find(item => item.id === listing.id);
     setIsAddedToCart(!!itemInCart);
   }, [GlobalState.cartItems, listing.id]);
 
-
-
-
-  // setting for add to cart
+  // افزودن به بوک‌مارک
   function addToCart(listing) {
     if (GlobalState.userIsLogged) {
       GlobalDispatch({ type: "addCartItem", payload: listing });
       setIsAddedToCart(true);
-    } else if (!GlobalState.userIsLogged) {
-      setLoginOpen(true)
+    } else {
+      // اگر لاگین نکرده باشد پاپ‌آپ لاگین را باز کن
+      setLoginOpen(true);
     }
   }
 
-
-
-  // function for remove item
+  // حذف از بوک‌مارک
   const removeFromCart = (cart) => {
-    GlobalDispatch({
-      type: "removeCardItem",
-      payload: cart
-    });
+    GlobalDispatch({ type: "removeCardItem", payload: cart });
     setIsAddedToCart(false);
   };
 
-
-
-
-
-  //function for like
+  // تابع لایک/آنلایک
   const handleToggleLike = () => {
     if (GlobalState.userIsLogged) {
-      GlobalDispatch({
-        type: "toggleLike",
-        payload: listing.id
-      });
-    } else if (!GlobalState.userIsLogged) {
-      setLoginOpen(true)
+      GlobalDispatch({ type: "toggleLike", payload: listing.id });
+    } else {
+      setLoginOpen(true);
     }
   };
-
   const isCardLiked = GlobalState.isLiked.includes(listing.id);
 
+  // قیمت هر متر
+  const PriceEachMeter = listing.price_for_sale / listing.area_metere;
+  const convertedPrice = digitsEnToFa(
+    Math.round(PriceEachMeter)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  );
 
-
-  //setting price for each meter
-const PriceEachMeter = listing.price_for_sale / listing.area_metere;
-const convertedPrice = digitsEnToFa(Math.round(PriceEachMeter).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-
-
-  //setting for count pictures
+  // تعداد عکس‌ها
   const listingPictures = [
     listing.picture1,
     listing.picture2,
@@ -188,12 +156,9 @@ const convertedPrice = digitsEnToFa(Math.round(PriceEachMeter).toString().replac
     listing.picture4,
     listing.picture5,
     listing.picture6,
-  ].filter(picture => picture !== null).length
+  ].filter(picture => picture !== null).length;
 
-
-
-
-
+  // محاسبه زمان سپری شده از انتشار آگهی
   function timeDifference() {
     let now = moment.utc().locale('fa');
     let post_date = moment.utc(listing.date_posted, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').locale('fa');
@@ -204,175 +169,168 @@ const convertedPrice = digitsEnToFa(Math.round(PriceEachMeter).toString().replac
     return digitsEnToFa(formattedDifference);
   }
 
-
-
-
-
   return (
-    <Card
+    // به جای <Card> از <CardWrapper> + <CardInner> استفاده می‌کنیم
+    <CardWrapper
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      key={listing.id}>
+      key={listing.id}
+    >
+      <CardInner>
+        <CardMedia animate={animateCardMedia} transition={transition}>
+          {listing.picture1 ? (
+            <img src={listing.picture1} alt="picture1" />
+          ) : (
+            <img src={cam} alt="picture3" />
+          )}
 
-      <CardMedia animate={animateCardMedia} transition={transition} >
-        {listing.picture1 !== null ? (
-          <img src={listing?.picture1} alt='picture1' />
-        )
-          :
-          (
+          <Status>
+            {listing.borough} <MdLocationOn size={25} color="var(--light-green)" />
+          </Status>
 
-            <img src={cam} alt='picture3' />
+          <Date>
+            <WatchLaterIcon style={{ color: "#fff", fontSize: "15px" }} />
+            {timeDifference()}
+          </Date>
 
-          )
-        }
-        <Status>
-          {listing.borough} <MdLocationOn size={25} color='var(--light-green)' />
-        </Status>
-        <Date>
-          <WatchLaterIcon style={{ color: "#fff", fontSize: "15px" }} />
-          {timeDifference()}
-        </Date>
-        <PicLength>
-        <AiOutlineCamera size={15} color='#fff'/>{digitsEnToFa(listingPictures)}
-        </PicLength>
-      </CardMedia>
+          <PicLength>
+            <AiOutlineCamera size={15} color="#fff" />
+            {digitsEnToFa(listingPictures)}
+          </PicLength>
+        </CardMedia>
 
+        <CardBody>
+          <CardTitle>
+            <CardTitleInfo>
+              {listing.bargain_type}{"  "}{listing.property_type}
+            </CardTitleInfo>
+            <CardTitleInfo>
+              {digitsEnToFa(listing.area_metere)} متری
+            </CardTitleInfo>
+          </CardTitle>
 
-      <CardBody>
-        <CardTitle>
-          <CardTitleInfo>{listing.bargain_type}{"  "}{"  "}{listing.property_type}</CardTitleInfo>
-          <CardTitleInfo>{digitsEnToFa(listing.area_metere)}{" "}متری</CardTitleInfo>
-        </CardTitle>
-        {!isHovered && (
-
-
-          <MetaInfo animate={animateMeta}>
-            <PriceInfo>
-              {listing.bargain_type === "فروش" ?
-                (<span>قیمت کل :</span>)
-                :
-                (<span> ودیعه:</span>)
-              }
-              <Price>
-                <PriceText>{digitsEnToFa(addCommas(listing.price_for_sale))}{" "}تومان</PriceText>
-              </Price>
-            </PriceInfo>
-            {listing.bargain_type === "فروش" &&
+          {!isHovered && (
+            <MetaInfo animate={animateMeta}>
               <PriceInfo>
-                <span>قیمت هر متر:</span>
+                {listing.bargain_type === "فروش" ? (
+                  <span>قیمت کل :</span>
+                ) : (
+                  <span>ودیعه:</span>
+                )}
                 <Price>
-                  <PriceText>{addCommas(convertedPrice)}</PriceText>
+                  <PriceText>
+                    {digitsEnToFa(addCommas(listing.price_for_sale))} تومان
+                  </PriceText>
                 </Price>
               </PriceInfo>
-            }
-            {(listing.bargain_type === "اجاره" &&
-              listing.bargain_type !== null &&
-              listing.bargain_type !== "" &&
-              listing.bargain_type !== 0) ? (
-              <PriceInfo>
-                <span>اجاره ماهیانه:</span>
-                <Price>
-                  <PriceText>{digitsEnToFa(addCommas(listing.rent_per_month))}{" "}تومان</PriceText>
-                </Price>
-              </PriceInfo>
-            )
-              :
-              ("")
-            }
-          </MetaInfo>
-        )}
 
+              {listing.bargain_type === "فروش" && (
+                <PriceInfo>
+                  <span>قیمت هر متر:</span>
+                  <Price>
+                    <PriceText>{digitsEnToFa(addCommas(convertedPrice))}</PriceText>
+                  </Price>
+                </PriceInfo>
+              )}
+              {listing.bargain_type === "رهن کامل" && (
+                <PriceInfo>
+                  <span>  اجاره ماهیانه:</span>
+                  <Price>
+                    <PriceText>رایگان</PriceText>
+                  </Price>
+                </PriceInfo>
+              )}
 
+              {listing.bargain_type === "اجاره" &&
+                listing.rent_per_month > 0 && (
+                  <PriceInfo>
+                    <span>اجاره ماهیانه:</span>
+                    <Price>
+                      <PriceText>
+                        {digitsEnToFa(addCommas(listing.rent_per_month))} تومان
+                      </PriceText>
+                    </Price>
+                  </PriceInfo>
+                )}
+            </MetaInfo>
+          )}
 
+          <TagsCta animate={animateMetaList}>
+            <Tags onClick={() => state.mapInstance.flyTo([listing.latitude, listing.longitude], 16)}>
+              مشاهده مکان روی نقشه
+            </Tags>
+            <CtaGrp>
+              <CtaLink href={`/listings/${listing.id}`}>
+                مشاهده جزئیات
+              </CtaLink>
+            </CtaGrp>
+          </TagsCta>
 
+          <Grid item container style={{ height: "15rem", marginTop: "1rem" }}>
+            <MapContainer center={[35.73087557318668, 51.35107070174615]} zoom={14} scrollWheelZoom>
+              <TileLayer
+                attribution=""
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <TheMapComponent />
+              <Marker position={[listing.latitude, listing.longitude]} />
+            </MapContainer>
+          </Grid>
 
-        <TagsCta animate={animateMetaList}>
-          <Tags onClick={() => state.mapInstance.flyTo([listing.latitude, listing.longitude], 16)}>مشاهده مکان روی نقشه</Tags>
-          <CtaGrp>
-            <CtaLink href={`/listings/${listing.id}`}>مشاهده جزئیات</CtaLink>
-          </CtaGrp>
-        </TagsCta>
-
-
-        <Grid item container style={{ height: "15rem", marginTop: "1rem" }}>
-          <MapContainer center={[35.73087557318668, 51.35107070174615]} zoom={14} scrollWheelZoom={true}>
-            <TileLayer
-              attribution=''
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <TheMapComponent />
-            <Marker
-              position={[listing.latitude, listing.longitude]}
-            >
-            </Marker>
-          </MapContainer>
-        </Grid>
-
-        <MetaList animate={animateMetaList}>
-
-          <IconButton style={{ marginBottom: '10px' }}
-          >
-            {isAddedToCart ? (
-              <BookmarkIcon
-                onClick={() => removeFromCart(listing)}
-                size={24}
-                style={{ color: 'gray', margin: '5px', position: 'relative' }} />
-            ) : (
-              <BookmarkBorderIcon
-                onClick={() => addToCart(listing)}
-                size={24}
-                style={{ color: 'gray', margin: '5px', position: 'relative' }} />
-            )}
-          </IconButton>
-
-
-
-
-
-          <IconButton
-            style={{ marginBottom: '10px' }}
-            onClick={handleToggleLike}
-          >
-            {isCardLiked ? (
-              <FavoriteIcon size={24} style={{ color: 'red', position: 'relative' }} />
-            ) : (
-              <FavoriteBorderIcon size={24} style={{ color: 'gray', position: 'relative' }} />
-            )}
-          </IconButton>
-
-
-
-
-
-
-
-          <CopyToClipboard text={link}>
-            <IconButton
-              style={{ marginBottom: '10px' }}
-            >
-              <LinkComponent link={link} />
+          <MetaList animate={animateMetaList}>
+            {/* بوک‌مارک */}
+            <IconButton style={{ marginBottom: '10px' }}>
+              {isAddedToCart ? (
+                <BookmarkIcon
+                  onClick={() => removeFromCart(listing)}
+                  size={24}
+                  style={{ color: 'gray', margin: '5px', position: 'relative' }}
+                />
+              ) : (
+                <BookmarkBorderIcon
+                  onClick={() => addToCart(listing)}
+                  size={24}
+                  style={{ color: 'gray', margin: '5px', position: 'relative' }}
+                />
+              )}
             </IconButton>
-          </CopyToClipboard>
 
+            {/* لایک */}
+            <IconButton style={{ marginBottom: '10px' }} onClick={handleToggleLike}>
+              {isCardLiked ? (
+                <FavoriteIcon size={24} style={{ color: 'red', position: 'relative' }} />
+              ) : (
+                <FavoriteBorderIcon size={24} style={{ color: 'gray', position: 'relative' }} />
+              )}
+            </IconButton>
 
+            {/* کپی لینک */}
+            <CopyToClipboard text={link}>
+              <IconButton style={{ marginBottom: '10px' }}>
+                <LinkComponent link={link} />
+              </IconButton>
+            </CopyToClipboard>
 
+            {/* اشتراک‌گذاری */}
+            <IconButton style={{ marginBottom: '10px' }} onClick={() => setShareOpen(true)}>
+              <ShareIcon size={24} style={{ color: "gray", position: "relative" }} />
+            </IconButton>
+          </MetaList>
+        </CardBody>
 
+        {/* پاپ‌آپ‌های لاگین، رجیستر و اشتراک‌گذاری */}
+        {loginOpen && (
+          <Login setLoginOpen={setLoginOpen} setRegisterOpen={setRegisterOpen} />
+        )}
+        {registerOpen && (
+          <Register setRegisterOpen={setRegisterOpen} setLoginOpen={setLoginOpen} />
+        )}
+        {shareOpen && (
+          <MediaSharing setShareOpen={setShareOpen} />
+        )}
+      </CardInner>
+    </CardWrapper>
+  );
+};
 
-          <IconButton
-            style={{ marginBottom: '10px' }}
-            onClick={() => setShareOpen(true)}
-          >
-            <ShareIcon
-              size={24}
-              style={{ color: "gray", position: "relative" }} />
-          </IconButton>
-        </MetaList>
-      </CardBody>
-      {loginOpen && <Login setLoginOpen={setLoginOpen} setRegisterOpen={setRegisterOpen} />}
-      {registerOpen && <Register setRegisterOpen={setRegisterOpen} setLoginOpen={setLoginOpen} />}
-      {shareOpen && <MediaSharing setShareOpen={setShareOpen} />}
-    </Card >
-  )
-}
-
-export default ListingCard
+export default ListingCard;

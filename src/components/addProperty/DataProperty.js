@@ -66,25 +66,31 @@ export const areaOptions = [
 
 
 export const boroughOptions = [
-    {
-        value: '',
-        label: '',
-    }, {
-        value: 'فرمانیه',
-        label: 'فرمانیه',
-    }, {
-        value: 'تجریش',
-        label: 'تجریش',
-    }
-    , {
-        value: 'میدان انقلاب',
-        label: 'میدان اقلاب',
-    }
-    , {
-        value: 'داراآباد',
-        label: 'داراآباد',
-    }
-]
+    { label: "", value: "" },
+    { label: "منطقه 1", value: "منطقه 1" },
+    { label: "منطقه 2", value: "منطقه 2" },
+    { label: "منطقه 3", value: "منطقه 3" },
+    { label: "منطقه 4", value: "منطقه 4" },
+    { label: "منطقه 5", value: "منطقه 5" },
+    { label: "منطقه 6", value: "منطقه 6" },
+    { label: "منطقه 7", value: "منطقه 7" },
+    { label: "منطقه 8", value: "منطقه 8" },
+    { label: "منطقه 9", value: "منطقه 9" },
+    { label: "منطقه 10", value: "منطقه 10" },
+    { label: "منطقه 11", value: "منطقه 11" },
+    { label: "منطقه 12", value: "منطقه 12" },
+    { label: "منطقه 13", value: "منطقه 13" },
+    { label: "منطقه 14", value: "منطقه 14" },
+    { label: "منطقه 15", value: "منطقه 15" },
+    { label: "منطقه 16", value: "منطقه 16" },
+    { label: "منطقه 17", value: "منطقه 17" },
+    { label: "منطقه 18", value: "منطقه 18" },
+    { label: "منطقه 19", value: "منطقه 19" },
+    { label: "منطقه 20", value: "منطقه 20" },
+    { label: "منطقه 21", value: "منطقه 21" },
+    { label: "منطقه 22", value: "منطقه 22" },
+];
+
 
 
 

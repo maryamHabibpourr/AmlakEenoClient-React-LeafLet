@@ -1,24 +1,28 @@
 .commentComponent{
     width: 100%;
-    padding: 20px 50px;
+    padding: 20px 0px;
     background-color:#f1f1f1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap:10px;
     align-items: center;
     justify-content: center;
     @media (max-width: 700px){
+        flex-direction: column;
         padding: 0;
         margin: 15px 0px 5px 0px;
     }
     .CommentPostContainer{
-        width: 98%;
-        padding:20px; 
+        span{
+           font-size: 12px; 
+        }
+        width: 40%;
+        max-height: 200px !important;
+        padding: 10px;
         background-color: #fff;
         display:flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        margin-bottom: 15px;
         @media (max-width: 700px){
             width: calc(100% - 2%);
         }
@@ -44,7 +48,8 @@
    
     }
     .container{
-        width: 60%;
+        width: 50%;
+        max-height: 200px;
         padding:30px; 
         background-color: #fff;
         display: flex;

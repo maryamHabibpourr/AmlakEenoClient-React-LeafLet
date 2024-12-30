@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import Axios from "axios"
-import { useImmerReducer } from 'use-immer';
+
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styles from "./Map.module.scss"
-
-
 //react leafLet
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Polygon, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import { Icon } from 'leaflet';
-
-//mui
-import { AppBar, Button, Card, CardContent, CardHeader, CardMedia, CircularProgress, Grid, Typography, IconButton, CardActions, } from '@mui/material'
-import RoomIcon from '@mui/icons-material/Room';
-
-
-
 //icons
 import houseIconPng from "../../assets/Mapicons/house.png";
 import apartmentIconPng from "../../assets/Mapicons/apartment.png";
@@ -23,7 +13,6 @@ import officeIconPng from "../../assets/Mapicons/office.png";
 
 
 function Map({ allListings }) {
-
   const navigate = useNavigate()
 
 
@@ -49,7 +38,7 @@ function Map({ allListings }) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* <Marker position={[35.69240586138035, 51.264553373413804]} /> */}
+
         {allListings.map((listing) => {
           function IconDispaly() {
             if (listing.listing_type === "مسکونی") {
@@ -80,14 +69,7 @@ function Map({ allListings }) {
                   alt='picture1'
                   style={{ height: "10rem", width: "14rem", cursor: "pointer" }}
                   onClick={() => navigate(`/listings/${listing.id}/`)} />
-                {/* <Button variant='contained' fullWidth
-                  onClick={() => navigate(`/listings/${listing.id}/`)}>
-                  Details
-                </Button> */}
               </Popup>
-
-
-
             </Marker>
           )
         })}
@@ -97,3 +79,8 @@ function Map({ allListings }) {
 }
 
 export default Map
+
+
+
+
+
