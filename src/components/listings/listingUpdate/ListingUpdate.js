@@ -11,7 +11,6 @@ import StateContext from "../../../Context/StateContext";
 
 //MUI
 import {
-  Grid,
   Typography,
   Button,
   TextField,
@@ -22,6 +21,8 @@ import {
   Chip
 } from "@mui/material"
 import { makeStyles } from '@mui/styles';
+import Grid from '@mui/material/Grid2';
+
 
 //data property
 import {
@@ -42,9 +43,6 @@ import {
   AdvertiserTypeOptions,
 } from "../../addProperty/DataProperty"
 import Card from "../../card/Card";
-
-
-
 
 
 

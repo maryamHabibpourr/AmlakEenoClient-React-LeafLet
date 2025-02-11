@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import react, { useEffect, useContext, useState } from "react";
+import react, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
 import { useImmerReducer } from "use-immer";
@@ -12,35 +12,35 @@ import styles from "./ProfileUpdate.module.scss"
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 //MUI
 import {
-  Grid,
   Button,
   TextField,
   Snackbar,
 } from "@mui/material"
+import Grid from '@mui/material/Grid2';
 import { makeStyles } from '@mui/styles';
-//persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
 
+//persian tools
+import { convertDigits } from "persian-helpers";
 
 
 
 
 const useStyles = makeStyles({
   registrationStyle: {
-    backgroundColor: "green !important",
-    border:"green !important",
+    backgroundColor: "#82050f !important",
+    border:"#82050f !important",
     color: "white !important",
     fontSize: "1rem",
-    marginLeft: "1rem",
+    // marginLeft: "1rem",
     "&:hover": {
-      backgroundColor: "blue !important"
+      backgroundColor: "gray !important"
     }
   },
   pictureBtn: {
     backgroundColor: "white !important",
     color: "black !important",
     fontSize: "0.8rem",
-    marginLeft: "1rem",
+    // marginLeft: "1rem",
     marginBottom:"15px",
     border: "2px dotted red !important",
   },
@@ -60,9 +60,9 @@ const ProfileUpdate = (props) => {
   
 
   const initialState = {
-    agencyNameValue: digitsEnToFa(props.userProfile.agencyName),
-    phoneNumberValue: digitsEnToFa(props.userProfile.phoneNumber),
-    bioValue: digitsEnToFa(props.userProfile.bio),
+    agencyNameValue: convertDigits(props.userProfile.agencyName),
+    phoneNumberValue: convertDigits(props.userProfile.phoneNumber),
+    bioValue: convertDigits(props.userProfile.bio),
     profilePictureValue: props.userProfile.profilePic,
     uploadedPicture: [],
     sendRequest: 0,
@@ -77,15 +77,15 @@ const ProfileUpdate = (props) => {
   function ReducerFunction(draft, action) {
     switch (action.type) {
       case 'catchAgencyNameChange':
-        draft.agencyNameValue = digitsEnToFa(action.agencyNameChose)
+        draft.agencyNameValue = convertDigits(action.agencyNameChose)
         break
 
       case 'catchPhoneNumberChange':
-        draft.phoneNumberValue = digitsEnToFa(action.phoneNumberChose)
+        draft.phoneNumberValue = convertDigits(action.phoneNumberChose)
         break
 
       case 'catchBioChange':
-        draft.bioValue = digitsEnToFa(action.bioChose)
+        draft.bioValue = convertDigits(action.bioChose)
         break
 
 
@@ -272,7 +272,8 @@ const ProfileUpdate = (props) => {
             {ProfilePictureDispaly()}
           </Grid>
 
-          <Grid item container
+          <Grid container spacing={2}  style={{ display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center" }}>
+          <Grid item size={6}
             style={{ marginTop: "1rem", marginLeft: "auto", marginRight: "auto" }}
             xs={6}>
             <Button
@@ -297,7 +298,7 @@ const ProfileUpdate = (props) => {
 
          
 
-          <Grid item container
+          <Grid item size={6}
             style={{ marginTop: "1rem", marginLeft: "auto", marginRight: "auto" }}
             xs={8}>
             <Button
@@ -309,6 +310,7 @@ const ProfileUpdate = (props) => {
             >
               به روز رسانی
             </Button>
+          </Grid>
           </Grid>
         </form>
       </Card>

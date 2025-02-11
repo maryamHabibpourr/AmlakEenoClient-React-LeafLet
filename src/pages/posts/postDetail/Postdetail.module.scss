@@ -1,91 +1,123 @@
-.postDetailContainer{
+.postDetailContainer {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 100px 10px;
+  .breadCrumbsContainer {
     width: 100%;
-    background-color: #f1f1f1;
-    padding: 30px 10px;
-    .breadCrumbsContainer{
-        width: 100%;
-        height: 50px;
-        padding: 2rem;
+    height: 50px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 10px;
+      height: fit-content;
+      padding: 10px;
+    }
+  }
+  .mainContentDetailComponent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 30px;
+    @media (max-width: 900px) {
+      flex-direction: column;
+      padding: 0px;
+      gap: 20px;
+    }
+    .cardContentImage {
+      width: 60%;
+    //   background-color: blue;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    //   align-items: center;
+    //   justify-content: center;
+      margin: auto;
+      @media (max-width: 550px) {
+        width: calc(100% - 4%);
+        gap: 20px;
+      }
+      .picturePost {
+        height: 400px;
+        width: 700px;
+        cursor: pointer;
+        @media (max-width: 550px) {
+          height: 300px;
+          width: 300px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        text-align: right;
+      }
+      p {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #333;
+        text-align: right;
+        line-height: 2rem;
+      }
+    }
+    .postListContainer {
+      width: 30%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border: 1px solid gray;
+      border-radius: 10px;
+      padding: 10px;
+      position: sticky;
+      top: 100px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+
+      @media (max-width: 550px) {
+        width: calc(100% - 4%);
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-align: center;
+        color: rgb(135, 136, 219);
+        padding: 5px;
+        margin-bottom: 15px;
+      }
+      .postList {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        @media (max-width: 500px){
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap:10px;
-            height: fit-content;
-            padding: 10px;
-        }
-
-    }
-    .cardContentImage{
-        display: flex;
-        flex-direction: row;
         justify-content: center;
-        padding-top: 5px;
-        gap: 10px;
-        @media(max-width:900px){
-            flex-direction:column-reverse; 
-            align-items: center;
-            justify-content: center;
-            gap: 0px;
-        }
-        .cardConetntPost{
-            width: 40%;
-            max-height: 450px !important;
-            overflow-y: scroll;
-            padding: 50px;
-            background-color: #fff;
-            border-top: 5px solid var( --color-red);
-            h1{
-                font-size: 1.2rem;
-                color:#757575;
-                margin-bottom: 20px;
-                font-family: YekanBakh;
-            }
-            p{
-                color:#000;
-                align-items: center;
-                text-align: justify;
-                justify-content: center;
-                font-family: YekanBakh;
-                font-size:14px;
-            }
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-                padding: 30px 10px 30px 10px;
-            }
-        } 
-        .picturePost{
-            width: 50%;
-            max-height: 450px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-            }
-            img{
-                align-items: center;
-                justify-content: center;
-                width: calc(100% - 1%);
-                max-height: 450px;
-                margin: auto;
-                @media (max-width:900px){
-                    width:100%;
-                    height: 100%;
-                }
-            }
-
-        } 
-    }
-    .commentSction{
         width: 100%;
-        height: fit-content;
-        // @media(max-width:700px){
-        //     width: calc(100% - 2%);
-        // }
+        gap: 15px;
+        p {
+          font-size: 1rem;
+          font-weight: 600;
+          text-align: center;
+          padding: 5px;
+          cursor: pointer;
+          background-color: rgb(198, 198, 204);
+          border-radius: 5px;
+        }
+      }
     }
+  }
+  .commentSction {
+    margin-top: 30px;
+    width: 100%;
+    height: fit-content;
+  }
 }

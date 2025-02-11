@@ -4,7 +4,8 @@ import Card from "../../components/card/Card";
 import { useNavigate } from "react-router-dom";
 import Axios from 'axios';
 //mui
-import { Grid, Typography, Button, Snackbar, Alert } from "@mui/material"
+import { Typography, Button, Snackbar, Alert } from "@mui/material"
+import Grid from '@mui/material/Grid2';
 import { makeStyles } from '@mui/styles';
 import { CssTextField } from "../../muiSettings/Settings";
 //Context

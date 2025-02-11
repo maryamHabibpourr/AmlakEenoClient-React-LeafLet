@@ -10,7 +10,7 @@ import {
     Typography
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import styles from "./Posts.module.scss"
+import styles from "./News.module.scss"
 
 //mui icons
 import HomeIcon from '@mui/icons-material/Home';
@@ -28,7 +28,7 @@ const shortenText = (text, n) => {
 };
 
 
-function Posts() {
+function News() {
 
     const [allPosts, setAllPosts] = useState([])
     const [dataIsLoading, setDataIsLoading] = useState(true)
@@ -69,23 +69,9 @@ function Posts() {
 
     return (
         <div className={styles.postPageContainer}>
-            <div className={styles.breadCrumbsContainer}>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link
-                        underline="hover"
-                        color="inherit"
-                        onClick={() => navigate("/")}
-                        style={{ cursor: "pointer" }}>
-                        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-                        صفحه اصلی
-                    </Link>
-                    <Typography color="red" style={{ fontWeight: "500" }}>
-                        <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-                        مقاله ها
-                    </Typography>
-                </Breadcrumbs>
+            <div className={styles.titleNewsContainer}>
+                <h2>اخبار تهران</h2> 
             </div>
-
             <div className={styles.postList}>
                 <div className={styles.postContainer}>
                     {allPosts.map((post) => (
@@ -117,4 +103,4 @@ function Posts() {
     )
 }
 
-export default Posts
+export default News

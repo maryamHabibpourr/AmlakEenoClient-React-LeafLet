@@ -7,12 +7,10 @@ import  CollapseModel from "../collapse/CollapseModel"
 //date
 import moment from 'jalali-moment';
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 
 
 const year = moment().locale('fa').format('YYYY').toString();
-
-
 
 function Footer() {
   return (
@@ -20,7 +18,7 @@ function Footer() {
       <CollapseModel/>
       <SliderBrand/>
       <div></div>
-      <div className={styles.footer}>&copy;{digitsEnToFa(year)} تمامی حقوق برای املاک اینو محفوظ است.</div>
+      <div className={styles.footer}>&copy;{convertDigits(year)} تمامی حقوق برای املاک اینو محفوظ است.</div>
       <div className={styles.developer}>
         ساخته شده توسط{' '}
         <a

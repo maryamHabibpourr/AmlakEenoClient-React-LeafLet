@@ -1,42 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import Card from "../../../card/Card"
 import styles from "./ListingPios.module.scss"
-
 //react leafLet
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Icon } from "leaflet"
 // import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
-
 //svg Icons
 import stadiumIconPng from "../../../../assets/Mapicons/stadium.png";
 import hospitalIconPng from "../../../../assets/Mapicons/hospital.png";
 import universityIconPng from "../../../../assets/Mapicons/university.png";
-
-
 //MUI
-import { Chip, Divider, Grid, Typography } from "@mui/material"
-
-
+import { Chip, Divider, Typography } from "@mui/material"
 //react icons
 import { FaUniversity } from "react-icons/fa"
 import { FaHospitalAlt } from "react-icons/fa"
 import { MdStadium } from "react-icons/md"
-
-
-
 //persian tools
-import {halfSpace, digitsEnToFa, numberToWords, addCommas } from "@persian-tools/persian-tools";
-
-
+import { convertDigits } from "persian-helpers";
 
 
 function ListingPios({ listingInfo }) {
 
-
-
-    //icons
     const stadiumIcon = new Icon({
         iconUrl: stadiumIconPng,
         iconSize: [40, 40],
@@ -51,7 +36,6 @@ function ListingPios({ listingInfo }) {
         iconUrl: universityIconPng,
         iconSize: [40, 40],
     })
-
 
 
     const [isBlinking, setIsBlinking] = useState(false);
@@ -90,15 +74,12 @@ function ListingPios({ listingInfo }) {
         <div className={styles.MapInterestAreaContainer}>
             <Card cardClass={styles.MapInterestCardContainer}>
                 <Divider style={{ margin: "10px 0px 30px 0px" }}>
-                    <Chip label="این مکان نزدیک است به: " style={{ backgroundColor: "var( --color-red )", color:"#fff", fontSize: "15px", fontWeight:"500" }} />
+                    <Chip label="این مکان نزدیک است به: " style={{ backgroundColor: "var( --color-red )", color: "#fff", fontSize: "15px", fontWeight: "500" }} />
                 </Divider>
-
-
-
                 <div className={styles.carditemContainer}>
                     <div className={styles.cardItemInfo}>
-                        {listingInfo.listing_pois_within_10km.map(poi => {
 
+                        {listingInfo.listing_pois_within_10km.map(poi => {
                             function DegreeToRadian(coordinate) {
                                 return (coordinate * Math.PI) / 180;
                             }
@@ -110,7 +91,7 @@ function ListingPios({ listingInfo }) {
                                 const latitude2 = DegreeToRadian(poi.location.coordinates[0])
                                 const longitude2 = DegreeToRadian(poi.location.coordinates[1])
 
-                                // The formula
+
                                 const latDiff = latitude2 - latitude1;
                                 const lonDiff = longitude2 - longitude1;
                                 const R = 6371000 / 1000;
@@ -134,6 +115,8 @@ function ListingPios({ listingInfo }) {
                                     ) * R;
                                 return dist.toFixed(2);
                             }
+
+
                             function PoiIconReact() {
                                 if (poi.type === "استادیوم") {
                                     return <MdStadium style={{ fontSize: "2rem", color: "gray" }} />;
@@ -147,11 +130,11 @@ function ListingPios({ listingInfo }) {
                             }
                             return (
                                 <Card cardClass={styles.cardPio} key={poi.id}>
-                                    <Typography style={{ fontSize: "15px" }}>{digitsEnToFa(poi.name)}</Typography>
+                                    <Typography style={{ fontSize: "15px" }}>{convertDigits(poi.name)}</Typography>
                                     <div>
                                         <Typography variant="subtitle1">{PoiIconReact()}</Typography>
-                                        <Divider orientation="vertical" variant="middle" flexItem />
-                                        <Typography style={{ fontSize: "15px" }}>{digitsEnToFa(CalculateDistance())} کیلومتر</Typography>
+                                        {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+                                        <Typography style={{ fontSize: "15px" }}>{convertDigits(CalculateDistance())} کیلومتر</Typography>
                                     </div>
                                 </Card>
                             )
@@ -160,7 +143,7 @@ function ListingPios({ listingInfo }) {
 
 
                     <div className={styles.cardMapInfo}>
-                    <MapContainer
+                        <MapContainer
                             center={[listingInfo.latitude, listingInfo.longitude]}
                             zoom={16} scrollWheelZoom={true}>
                             <TileLayer
@@ -214,3 +197,7 @@ function ListingPios({ listingInfo }) {
 
 
 export default ListingPios
+
+
+
+

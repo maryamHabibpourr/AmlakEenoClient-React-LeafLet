@@ -18,7 +18,6 @@ import styles from "./addProperty.module.scss"
 
 //MUI
 import {
-  Grid,
   Typography,
   Button,
   TextField,
@@ -30,6 +29,8 @@ import {
   Chip,
   MenuItem
 } from "@mui/material"
+import Grid from '@mui/material/Grid2';
+// import Grid from '@mui/material/Unstable_Grid2';
 import { makeStyles } from '@mui/styles';
 
 //data property
@@ -53,10 +54,6 @@ import {
   AdvertiserTypeOptions,
 } from "./DataProperty"
 import Card from "../card/Card";
-import { Map } from "leaflet";
-//persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
-
 
 
 import Region1 from "./Boroughs/Region1";
@@ -115,13 +112,13 @@ const regionsMap = {
 
 const useStyles = makeStyles({
   registrationStyle: {
-    backgroundColor: "green !important",
-    border: "green !important",
+    backgroundColor: "#82050f !important",
+    border: "#82050f !important",
     color: "white !important",
     fontSize: "1rem",
     marginLeft: "1rem",
     "&:hover": {
-      backgroundColor: "blue !important"
+      backgroundColor: "gray !important"
     }
   },
   pictureBtn: {
@@ -1074,41 +1071,40 @@ function AddProperty() {
             <Chip label="اطلاعات مهم اولیه" style={{ backgroundColor: "#fff", border: "1px solid red", fontSize: "15px" }} />
           </Divider>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
-              style={{ marginTop: "1rem" }}>
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}>
               <TextField
                 id="bargainType"
                 label="نوع معامله*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15, color: "success" } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
-                value={state.bargainTypeValue}
                 fullWidth
+                value={state.bargainTypeValue}
                 onChange={(e) =>
                   dispatch({
                     type: 'catchBargianTypeChange',
-                    bargainTypeChose: e.target.value
-                  })}
-
+                    bargainTypeChose: e.target.value,
+                  })
+                }
                 onBlur={(e) =>
                   dispatch({
                     type: 'catchBargainTypeErrors',
-                    bargainTypeChose: e.target.value
-                  })}
-
-                error={state.bargainTypeErrors.hasErrors ? true : false}
+                    bargainTypeChose: e.target.value,
+                  })
+                }
+                error={state.bargainTypeErrors.hasErrors}
                 helperText={state.bargainTypeErrors.errorMessage}
-
                 select
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 SelectProps={{
-                  native: false, // اینجا گزینه native غیرفعال است
                   MenuProps: {
                     PaperProps: {
-                      style: {
-                        textAlign: "right", // تنظیم راست‌چین متن
-                        paddingRight: "10px", // تنظیم فاصله داخلی
+                      sx: {
+                        textAlign: 'right',
+                        pr: 1,
                       },
                     },
                   },
@@ -1122,39 +1118,39 @@ function AddProperty() {
               </TextField>
             </Grid>
 
-            <Grid item xs={12} md={5}
-              style={{ marginTop: "1rem" }}>
+            <Grid size={{ xs: 12, md: 5 }}>
               <TextField
                 id="listingType"
                 label="نوع مکان*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
-                value={state.listingTypeValue}
                 fullWidth
+                value={state.listingTypeValue}
                 onChange={(e) =>
                   dispatch({
                     type: 'catchListingTypeChange',
-                    listingTypeChose: e.target.value
-                  })}
+                    listingTypeChose: e.target.value,
+                  })
+                }
                 onBlur={(e) =>
                   dispatch({
                     type: 'catchListingTypeErrors',
-                    listingTypeChose: e.target.value
-                  })}
-
-                error={state.listingTypeErrors.hasErrors ? true : false}
+                    listingTypeChose: e.target.value,
+                  })
+                }
+                error={state.listingTypeErrors.hasErrors}
                 helperText={state.listingTypeErrors.errorMessage}
-
                 select
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 SelectProps={{
-                  native: false, // اینجا گزینه native غیرفعال است
                   MenuProps: {
                     PaperProps: {
-                      style: {
-                        textAlign: "right", // تنظیم راست‌چین متن
-                        paddingRight: "10px", // تنظیم فاصله داخلی
+                      sx: {
+                        textAlign: 'right',
+                        pr: 1,
                       },
                     },
                   },
@@ -1168,16 +1164,15 @@ function AddProperty() {
               </TextField>
             </Grid>
           </Grid>
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
-              style={{ marginTop: "1rem" }}>
+
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid
+              style={{ marginTop: "1rem" }}
+              size={{ xs: 12, md: 5 }}>
               <TextField
                 id="propertyType"
                 label="نوع ساختمان*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
                 value={state.propertyTypeValue}
                 fullWidth
                 onChange={(e) =>
@@ -1193,15 +1188,19 @@ function AddProperty() {
 
                 error={state.propertyTypeErrors.hasErrors ? true : false}
                 helperText={state.propertyTypeErrors.errorMessage}
-
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 select
                 SelectProps={{
-                  native: false, 
+                  native: false,
                   MenuProps: {
                     PaperProps: {
                       style: {
-                        textAlign: "right", 
-                        paddingRight: "10px", 
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
                   },
@@ -1215,15 +1214,12 @@ function AddProperty() {
               </TextField>
             </Grid>
 
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="propertyType"
                 label="تعداد اتاق*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
                 value={state.roomNumberValue}
                 fullWidth
                 onChange={(e) =>
@@ -1241,14 +1237,19 @@ function AddProperty() {
 
                 error={state.roomNumberErrors.hasErrors ? true : false}
                 helperText={state.roomNumberErrors.errorMessage}
-                select    
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
+                select
                 SelectProps={{
-                  native: false, 
+                  native: false,
                   MenuProps: {
                     PaperProps: {
                       style: {
-                        textAlign: "right", 
-                        paddingRight: "10px", 
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
                   },
@@ -1263,16 +1264,20 @@ function AddProperty() {
               </TextField>
             </Grid>
           </Grid>
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          
+
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="area-metere"
                 type="number"
                 label="زیربنا(مترمربع)*"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 variant="standard"
                 value={state.areaMetereValue}
                 fullWidth
@@ -1291,15 +1296,17 @@ function AddProperty() {
               />
             </Grid>
 
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="price"
                 type="number"
                 label={PriceDisplay()}
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 variant="standard"
                 value={state.priceForSaleValue}
                 fullWidth
@@ -1322,7 +1329,8 @@ function AddProperty() {
           </Grid>
 
 
-          <Grid item container justifyContent="space-between">
+
+          <Grid container spacing={2} justifyContent="space-between">
             {state.bargainTypeValue === "اجاره" ? (
               <Grid item xs={12} md={5}
                 style={{ marginTop: "1rem" }}>
@@ -1331,9 +1339,11 @@ function AddProperty() {
                   type="number"
                   label="اجاره (ماهیانه)*"
                   variant="standard"
-                  inputProps={{ style: { fontSize: 15 } }}
-                  InputLabelProps={{ style: { fontSize: 17 } }}
-                  FormHelperTextProps={{ style: { fontSize: 13 } }}
+                  sx={{
+                    '& .MuiInputBase-input': { fontSize: 15 },
+                    '& .MuiInputLabel-root': { fontSize: 17 },
+                    '& .MuiFormHelperText-root': { fontSize: 13 },
+                  }}
                   disabled={state.bargainTypeValue === "رهن کامل" || state.bargainTypeValue === "فروش" ? true : false}
                   value={state.rentPerMonthValue}
                   fullWidth
@@ -1349,17 +1359,19 @@ function AddProperty() {
               ("")}
           </Grid>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="buildingAge"
                 type="number"
                 label="سن ساختمان به سال*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.buildingAgeValue}
                 fullWidth
                 onChange={(e) =>
@@ -1378,15 +1390,17 @@ function AddProperty() {
                 helperText={state.buildingAgeErrors.errorMessage}
               />
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="buildingFace"
                 label="جهت ملک"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.buildingFaceValue}
                 fullWidth
                 onChange={(e) =>
@@ -1395,37 +1409,41 @@ function AddProperty() {
                     buildingFaceChose: e.target.value
                   })}
 
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {BuildingFaceOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {BuildingFaceOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
           </Grid>
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+
+
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="area"
                 label="شهر*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.areaValue}
                 fullWidth
                 onChange={(e) =>
@@ -1440,15 +1458,15 @@ function AddProperty() {
                   })}
                 error={state.areaErrors.hasErrors ? true : false}
                 helperText={state.areaErrors.errorMessage}
-                  
-                select    
+
+                select
                 SelectProps={{
-                  native: false, 
+                  native: false,
                   MenuProps: {
                     PaperProps: {
                       style: {
-                        textAlign: "right", 
-                        paddingRight: "10px", 
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
                   },
@@ -1462,15 +1480,17 @@ function AddProperty() {
               </TextField>
             </Grid>
             {/* //ralated to the borough############################################################# */}
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="borough"
                 label="منطقه*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.boroughValue}
                 fullWidth
                 onChange={(e) =>
@@ -1485,14 +1505,14 @@ function AddProperty() {
                   })}
                 error={state.boroughErrors.hasErrors ? true : false}
                 helperText={state.boroughErrors.errorMessage}
-                select    
+                select
                 SelectProps={{
-                  native: false, 
+                  native: false,
                   MenuProps: {
                     PaperProps: {
                       style: {
-                        textAlign: "right", 
-                        paddingRight: "10px", 
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
                   },
@@ -1544,17 +1564,19 @@ function AddProperty() {
             <Chip label="اطلاعات مهم ثانویه" style={{ backgroundColor: "#fff", border: "1px solid red", fontSize: "15px" }} />
           </Divider>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="numberOfFloorOfBuilding"
                 type="number"
                 label="تعداد طبقات ساختمان*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.numberOfFloorOfBuildingValue}
                 fullWidth
                 onChange={(e) =>
@@ -1573,16 +1595,18 @@ function AddProperty() {
                 helperText={state.numberOfFloorOfBuildingErrors.errorMessage}
               />
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="rentPerMonth"
                 type="number"
                 label="تعداد واحد در هر طبقه* "
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.numberOfUnitPerFloorValue}
                 fullWidth
                 onChange={(e) =>
@@ -1604,17 +1628,19 @@ function AddProperty() {
             </Grid>
           </Grid>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="floorOfBuilding"
                 type="number"
                 label="طبقه ملک*"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.floorOfBuildingValue}
                 fullWidth
                 onChange={(e) =>
@@ -1634,15 +1660,17 @@ function AddProperty() {
                 helperText={state.floorOfBuildingErrors.errorMessage}
               />
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="propertyStatuse"
                 label="وضعیت ملک"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.propertyStatusValue}
                 fullWidth
                 onChange={(e) =>
@@ -1651,24 +1679,24 @@ function AddProperty() {
                     propertyStatusChose: e.target.value
                   })}
 
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {propertyStatusOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {propertyStatusOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
           </Grid>
@@ -1775,16 +1803,18 @@ function AddProperty() {
           </Divider>
 
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="buildingApearenc"
                 label="ظاهر ساختمان"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.buildingApearenceValue}
                 fullWidth
                 onChange={(e) =>
@@ -1793,36 +1823,38 @@ function AddProperty() {
                     buildingApearenceChose: e.target.value
                   })}
 
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {BuildingApearenceOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {BuildingApearenceOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
 
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="FloorCovering"
                 label="پوشش کف ملک"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.floorCoveringValue}
                 fullWidth
                 onChange={(e) =>
@@ -1831,38 +1863,40 @@ function AddProperty() {
                     floorCoveringChose: e.target.value
                   })}
 
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {FloorCoveringOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {FloorCoveringOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
           </Grid>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="buildingApearenc"
                 label="نوع سرویس"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.wcTypeValue}
                 fullWidth
                 onChange={(e) =>
@@ -1870,36 +1904,38 @@ function AddProperty() {
                     type: 'catchwcTypechange',
                     wcTypeChose: e.target.value
                   })}
-  
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {WcTypeOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {WcTypeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="kitchenApearence"
                 label="آشپزخانه"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.kitchenApearenceValue}
                 fullWidth
                 onChange={(e) =>
@@ -1907,41 +1943,41 @@ function AddProperty() {
                     type: 'catchKitchenApearencechange',
                     kitchenApearenceChose: e.target.value
                   })}
-                                    
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {KitchenApearenceOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {KitchenApearenceOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
-
-
           </Grid>
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="FloorCovering"
                 label="نوع سیستم گرمایشی"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.heatingSystemValue}
                 fullWidth
                 onChange={(e) =>
@@ -1950,35 +1986,37 @@ function AddProperty() {
                     heatingSystemChose: e.target.value
                   })}
 
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {HeatingSystemOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {HeatingSystemOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="kitchenApearence"
                 label="نوع سیستم سرمایشی"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.coolingSystemValue}
                 fullWidth
                 onChange={(e) =>
@@ -1986,38 +2024,41 @@ function AddProperty() {
                     type: 'catchCoolingSystemChange',
                     coolingSystemChose: e.target.value
                   })}
-                  select    
-                  SelectProps={{
-                    native: false, 
-                    MenuProps: {
-                      PaperProps: {
-                        style: {
-                          textAlign: "right", 
-                          paddingRight: "10px", 
-                        },
+                select
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    PaperProps: {
+                      style: {
+                        textAlign: "right",
+                        paddingRight: "10px",
                       },
                     },
-                  }}
-                >
-                  {coolingSystemOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
+                  },
+                }}
+              >
+                {coolingSystemOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
           </Grid>
+
           {state.bargainTypeValue === "فروش" ? (
-            <Grid item container justifyContent="space-between">
-              <Grid item xs={12} md={5}
+            <Grid container spacing={2} justifyContent="space-between">
+              <Grid size={{ xs: 12, md: 5 }}
                 style={{ marginTop: "1rem" }}>
                 <TextField
                   id="HouseDocumentStatus"
                   label="وضعیت سند"
                   variant="standard"
-                  inputProps={{ style: { fontSize: 15 } }}
-                  InputLabelProps={{ style: { fontSize: 17 } }}
-                  FormHelperTextProps={{ style: { fontSize: 13 } }}
+                  sx={{
+                    '& .MuiInputBase-input': { fontSize: 15 },
+                    '& .MuiInputLabel-root': { fontSize: 17 },
+                    '& .MuiFormHelperText-root': { fontSize: 13 },
+                  }}
                   value={state.houseDocumentStatusValue}
                   fullWidth
                   onChange={(e) =>
@@ -2025,27 +2066,27 @@ function AddProperty() {
                       type: 'catchHouseDocumentStatusChange',
                       houseDocumentStatusChose: e.target.value
                     })}
-                    select    
-                    SelectProps={{
-                      native: false, 
-                      MenuProps: {
-                        PaperProps: {
-                          style: {
-                            textAlign: "right", 
-                            paddingRight: "10px", 
-                          },
+                  select
+                  SelectProps={{
+                    native: false,
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right",
+                          paddingRight: "10px",
                         },
                       },
-                    }}
-                  >
-                    {houseDocumentStatusOptions.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
+                    },
+                  }}
+                >
+                  {houseDocumentStatusOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12} md={5}
+              <Grid size={{ xs: 12, md: 5 }}
                 style={{ marginTop: "1rem" }}>
                 <TextField
                   id="FloorCovering"
@@ -2062,24 +2103,24 @@ function AddProperty() {
                       houseDocumentTypeChose: e.target.value
                     })}
 
-                    select    
-                    SelectProps={{
-                      native: false, 
-                      MenuProps: {
-                        PaperProps: {
-                          style: {
-                            textAlign: "right", 
-                            paddingRight: "10px", 
-                          },
+                  select
+                  SelectProps={{
+                    native: false,
+                    MenuProps: {
+                      PaperProps: {
+                        style: {
+                          textAlign: "right",
+                          paddingRight: "10px",
                         },
                       },
-                    }}
-                  >
-                    {HouseDocumentTypeOptions.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
+                    },
+                  }}
+                >
+                  {HouseDocumentTypeOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
 
                 </TextField>
               </Grid>
@@ -2089,17 +2130,19 @@ function AddProperty() {
             :
             ("")}
 
-          <Grid item container justifyContent="space-between">
-            <Grid item xs={12} md={5}
+          <Grid container spacing={2} justifyContent="space-between">
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="nameOfPropertyOwner"
                 type="text"
                 label="اسم مالک "
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.nameOfPropertyOwnerValue}
                 fullWidth
                 onChange={(e) =>
@@ -2109,15 +2152,17 @@ function AddProperty() {
                   })}
               />
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="kitchenApearence"
                 label="آگهی کننده"
                 variant="standard"
-                inputProps={{ style: { fontSize: 15 } }}
-                InputLabelProps={{ style: { fontSize: 17 } }}
-                FormHelperTextProps={{ style: { fontSize: 13 } }}
+                sx={{
+                  '& .MuiInputBase-input': { fontSize: 15 },
+                  '& .MuiInputLabel-root': { fontSize: 17 },
+                  '& .MuiFormHelperText-root': { fontSize: 13 },
+                }}
                 value={state.advertiserTypeValue}
                 fullWidth
                 onChange={(e) =>
@@ -2147,9 +2192,11 @@ function AddProperty() {
               </TextField>
             </Grid>
           </Grid>
-          <Grid item container justifyContent="space-between"
+
+
+          <Grid container spacing={2} justifyContent="space-between"
             style={{ marginTop: "1rem" }}>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="addressOfBuilding"
@@ -2167,7 +2214,7 @@ function AddProperty() {
                   })}
               />
             </Grid>
-            <Grid item xs={12} md={5}
+            <Grid size={{ xs: 12, md: 5 }}
               style={{ marginTop: "1rem" }}>
               <TextField
                 id="description"
@@ -2187,10 +2234,10 @@ function AddProperty() {
 
           </Grid>
 
-
-          <Grid item container
+          <Grid container spacing={3}  style={{ display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center" }}>
+          <Grid size={{ xs:8, md: 5 }}
             style={{ marginTop: "1rem", marginLeft: "auto", marginRight: "auto" }}
-            xs={6}>
+            >
             <Button
               component="label"
               variant='contained'
@@ -2212,10 +2259,8 @@ function AddProperty() {
               <DownloadForOfflineIcon style={{ marginRight: "10px" }} />
             </Button>
           </Grid>
-
           {/* //display the names of pictures################################## */}
-
-          <Grid item container>
+          <Grid item>
             <ul>
               {state.picture1Value ? <li>{state.picture1Value.name}</li> : ""}
               {state.picture2Value ? <li>{state.picture2Value.name}</li> : ""}
@@ -2225,11 +2270,14 @@ function AddProperty() {
               {state.picture6Value ? <li>{state.picture6Value.name}</li> : ""}
             </ul>
           </Grid>
-          <Grid item container
+          <Grid size={{ xs:8, md: 5 }}
             style={{ marginTop: "1rem", marginLeft: "auto", marginRight: "auto" }}
-            xs={8}>
+            >
             {SubmitButtonDisplay()}
           </Grid>
+          </Grid>
+
+
         </form>
       </Card >
       <Snackbar

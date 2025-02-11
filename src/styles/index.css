@@ -38,17 +38,15 @@
   scroll-behavior: smooth;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
 
 body {
   font-family: var(--font-family) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: YekanBakh;
- 
+  margin: 0;
+  padding: 0;
+  
 }
 
 
@@ -150,3 +148,14 @@ ul li{
 .leaflet-control-attribution.leaflet-control {
   display: none !important;
 }
+
+
+.Toastify__toast-container {
+  padding: 0 !important; 
+}
+.Toastify{
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'YekanBakh', sans-serif;
+}
+

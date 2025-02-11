@@ -3,9 +3,8 @@
   flex-direction: column;
   background-color: #f1f1f1;
   min-height: 100vh;
-  
   @media screen and (max-width:1000px){
-    padding-top: 10px;
+    padding-top: 100px;
   }
   
   .top{
@@ -88,6 +87,9 @@
       background-color: #f1f1f1;
       border-left: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
+      position: sticky;  
+      top: 100px;  
+      z-index: 10; 
       right: 0;
       @media(max-width:1000px){
         display: none;

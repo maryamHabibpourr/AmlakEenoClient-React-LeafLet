@@ -2,15 +2,10 @@ import React, { useEffect, useContext } from "react";
 import styles from "./StoreCard.module.scss";
 import { useNavigate } from "react-router-dom";
 import Card from "../../components/card/Card";
-
 //assets
 import camera from "../../assets/camera.jpg"
-
-
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
-
-
+import { convertDigits } from "persian-helpers";
 //mui
 import {Typography, Breadcrumbs, Link} from "@mui/material"
 import { makeStyles } from '@mui/styles';
@@ -38,7 +33,6 @@ const useStyles = makeStyles({
     }
 
   },
-
 
 })
 
@@ -116,7 +110,7 @@ const StoreCard = () => {
                 {cartItems.map((cart, index) => {
                   return (
                     <tr key={cart.id}  >
-                      <td>{digitsEnToFa(index + 1)}</td>
+                      <td>{convertDigits(index + 1)}</td>
                       <td onClick={() => navigate(`/listings/${cart.id}`)}>
                         <p>
                           <b>{cart.bargain_type}</b>

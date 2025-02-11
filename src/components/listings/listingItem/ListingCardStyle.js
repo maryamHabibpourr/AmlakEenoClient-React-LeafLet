@@ -27,7 +27,7 @@ export const CardWrapper = styled.div`
   
   @media (max-width: 500px) {
     width: calc(100% - 2px);
-    height: auto; 
+    /* height: auto;  */
 
     &::before {
       content: '';

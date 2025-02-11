@@ -32,7 +32,6 @@ import DispatchContext from "../../../Context/DispatchContext";
 
 //MUI
 import {
-  Grid,
   Typography,
   CircularProgress,
   IconButton,
@@ -42,7 +41,7 @@ import {
   Dialog,
   Snackbar,
 } from "@mui/material"
-
+import Grid from '@mui/material/Grid2';
 
 
 //Mui ICons
@@ -74,8 +73,13 @@ import LinkComponent from "../../linkComponent/LinkComponent";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 
+
+
 //persian tools
-import { halfSpace, digitsEnToFa, numberToWords, addCommas } from "@persian-tools/persian-tools";
+import { convertDigits, convertDigitsToWords } from "persian-helpers";
+
+
+
 
 
 
@@ -93,6 +97,7 @@ function ListingDetail() {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [shareOpen, setShareOpen] = useState(false)
+  const [scrollpage, setScrollPage] = useState(false)
 
 
 
@@ -140,7 +145,6 @@ function ListingDetail() {
     }
   }
   const [state, dispatch] = useImmerReducer(ReducerFunction, initialState)
-
 
 
 
@@ -301,7 +305,7 @@ function ListingDetail() {
     async function GetListingInfo() {
       try {
         const response = await Axios.get(`https://api.amlakeeno.ir/api/listings/${params.id}/`);
-        console.log(response.data)
+        console.log("listingInfo", response.data)
         dispatch({
           type: "catchListingInfo",
           listingObject: response.data
@@ -361,15 +365,6 @@ function ListingDetail() {
 
 
 
-  // const now = moment().locale('fa').format('YYYY/MM/DD , HH:mm:ss').toString();
-  // console.log("now", now)
-  // const post_date = moment(state.listingInfo.date_posted, 'YYYY/MM/DD HH:mm:ss').locale('fa').endOf('jMonth').format('YYYY/MM/DD , HH:mm:ss').toString()
-  // console.log("post_date", post_date)
-  // const timeDifference = now.fromNow(post_date);
-  // console.log(timeDifference);
-
-
-
   function timeDifference() {
     let now = moment.utc().locale('fa');
     let post_date = moment.utc(state.listingInfo.date_posted, 'YYYY-MM-DDTHH:mm:ss.SSSSZ').locale('fa');
@@ -377,7 +372,7 @@ function ListingDetail() {
     let difference = now.diff(post_date, 'days');
     let formattedDifference = difference > 0 ? `${difference} روز پیش` : 'همین الان';
 
-    return digitsEnToFa(formattedDifference);
+    return convertDigits(formattedDifference);
   }
 
 
@@ -420,10 +415,22 @@ function ListingDetail() {
   }
 
 
+ 
+    const fix = () => {
+      if (window.scrollY > 10) {
+        setScrollPage(true)
+      } else {
+        setScrollPage(false)
+      }
+    }
+    window.addEventListener("scroll", fix)
+
 
 
   return (
     <div className={styles.listingDetailContainer} >
+
+
 
       <div className={styles.fixedIcons}>
         <IconButton style={{ marginBottom: '10px' }}
@@ -443,7 +450,6 @@ function ListingDetail() {
           )}
         </IconButton>
         {hoveredIcon === 'save' && <span>{renderIconText('save')}</span>}
-
 
 
 
@@ -493,7 +499,6 @@ function ListingDetail() {
       </div>
 
 
-
       <div className={styles.breadCrumbsContainer}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link
@@ -507,10 +512,8 @@ function ListingDetail() {
 
           <Typography color="gray" style={{ fontWeight: "500" }}>
             <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            {"  "}{"  "}{halfSpace(state.listingInfo.bargain_type)}{"  "}{"  "}
-            {"  "}{halfSpace(state.listingInfo.property_type)}{" "}{" "}
-            {/* <MdLocationOn sx={{ mr: 0.5 }} fontSize="inherit" />
-            {digitsEnToFa(state.listingInfo.borough)} */}
+            {"  "}{"  "}{state.listingInfo.bargain_type}{"  "}{"  "}
+            {"  "}{state.listingInfo.property_type}{" "}{" "}
           </Typography>
         </Breadcrumbs>
         <div className={styles.oclock}>
@@ -535,246 +538,246 @@ function ListingDetail() {
       </div>
 
 
+      <div className={styles.mainInfoContainer}>
 
-
-
-      <div className={styles.cardContentImage}>
-        <Card cardClass={styles.cardConetntListing}>
-          <h5>اطلاعات ملک:</h5>
-          {state.listingInfo.bargain_type === "فروش" && <h4><GiCheckMark style={{ color: "#757575" }} />{numberToWords(state.listingInfo.price_for_sale)}<span>تومان</span></h4>}
-          {state.listingInfo.bargain_type === "رهن کامل" || state.listingInfo.bargain_type === "اجاره" ? <h4><GiCheckMark style={{ color: "#757575" }} />{numberToWords(state.listingInfo.price_for_sale)}<span> تومان رهن یا ودیعه </span></h4> : ""}
-          {state.listingInfo.bargain_type === "اجاره" && <h4><GiCheckMark style={{ color: "#757575" }} />{numberToWords(state.listingInfo.rent_per_month)}<span> تومان اجاره ماهیانه </span></h4>}
-          <h4><GiCheckMark style={{ color: "#757575" }} />{digitsEnToFa(state.listingInfo.area_metere)}<span>متر زیربنا</span></h4>
-          <h4><GiCheckMark style={{ color: "#757575" }} /><span>دارای {"  "}</span>{state.listingInfo.rooms}</h4>
-          <h4><GiCheckMark style={{ color: "#757575" }} /><span>  طبقه   </span>{digitsEnToFa(state.listingInfo.floor_of_building)}<span>{" "}از{" "}</span>{state.listingInfo.number_of_floor_of_building === null || state.listingInfo.number_of_floor_of_building === "" ? "" : <span>{digitsEnToFa(state.listingInfo.number_of_floor_of_building)}</span>}</h4>
-          {state.listingInfo.number_of_unit_per_floor === null || state.listingInfo.number_of_unit_per_floor === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} />{digitsEnToFa(state.listingInfo.number_of_unit_per_floor)}<span> واحد در هر طبقه</span></h4>}
-          {state.listingInfo.listing_type === null || state.listingInfo.listing_type === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span> نوع مکان  </span>{state.listingInfo.listing_type}<span> می باشد </span></h4>}
-          {state.listingInfo.age_of_building === null || state.listingInfo.age_of_building === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} />{digitsEnToFa(state.listingInfo.age_of_building)}<span> سال ساخت است</span></h4>}
-          {state.listingInfo.building_face === null || state.listingInfo.building_face === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  جهت  </span>{state.listingInfo.building_face}</h4>}
-          {state.listingInfo.building_apearence === "سایر" || state.listingInfo.building_apearence === null || state.listingInfo.building_apearence === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  ظاهر ساختمان  </span>{state.listingInfo.building_apearence}<span> {""}می باشد{""}</span></h4>}
-          {state.listingInfo.floor_covering === "سایر" || state.listingInfo.floor_covering === null || state.listingInfo.floor_covering === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  کف ساختمان  </span>{state.listingInfo.floor_covering}<span>{" "}است{" "}</span></h4>}
-          {state.listingInfo.kitchen_apearence === "سایر" || state.listingInfo.kitchen_apearence === null || state.listingInfo.kitchen_apearence === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  آشپزخانه </span>{state.listingInfo.kitchen_apearence}<span>{" "} است{" "}</span></h4>}
-          {state.listingInfo.wc_type === null || state.listingInfo.wc_type === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  سرویس  </span>{state.listingInfo.wc_type}</h4>}
-          {state.listingInfo.heating_system === "سایر" || state.listingInfo.heating_system === null || state.listingInfo.heating_system === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>سیستم گرمایشی </span>{state.listingInfo.heating_system}</h4>}
-          {state.listingInfo.cooling_system === "سایر" || state.listingInfo.cooling_system === null || state.listingInfo.cooling_system === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>سیستم سرمایشی  </span>{state.listingInfo.cooling_system}</h4>}
-          {state.listingInfo.advertiser === null || state.listingInfo.advertiser === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  آگهی دهنده  </span>{state.listingInfo.advertiser}<span>{" "}است{" "}</span></h4>}
-          {state.listingInfo.name_of_property_owner === null || state.listingInfo.name_of_property_owner === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  اسم مالک  </span>{state.listingInfo.name_of_property_owner}<span>{" "}است{" "}</span></h4>}
-          {state.listingInfo.property_status === null || state.listingInfo.property_status === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  ملک </span>{state.listingInfo.property_status}<span>{" "}است{" "}</span></h4>}
-          {state.listingInfo.bargain_type === "فروش" ? (
-            <>
-              {state.listingInfo.house_document_status === null || state.listingInfo.house_document_status === "" ? "" : <h4><FcCheckmark /><span>  وضعیت سند  </span>{state.listingInfo.house_document_status}<span>{" "}است{" "}</span></h4>}
-              {state.listingInfo.house_document_type === null || state.listingInfo.house_document_type === "" ? "" : <h4><FcCheckmark /><span> نوع سند  </span>{state.listingInfo.house_document_type}<span>{" "}است{" "}</span></h4>}
-            </>
-          ) : ("")}
-        </Card>
-
-
-        {listingPictures.length > 0 ? (
-          <Card cardClass={styles.thumbnailPicturesStyle}>
-            {listingPictures.map((picture, index) => {
-              return (
+        <div className={styles.sellerInformationContainer}>
+          <Card cardClass={styles.cardInfoContainer}>
+            <h4>آگهی گذار</h4>
+            <div className={styles.InfoContainer}>
+              <Grid item xs={8} md={6}>
                 <img
-                  key={index}
-                  src={picture}
-                  alt="thumbnail"
-                  onClick={() => setCurrentPicture(index)}
-                  className={index === currentPicture ? styles.activeThumbnail : styles.thumbnail}
-                />
-              )
-            })}
-            <IoIosArrowUp onClick={PreviousPicture} size={20} className={styles.rightArrow} />
-            <IoIosArrowDown onClick={NextPicture} size={20} className={styles.leftArrow} />
-          </Card>) : ("")}
+                  src={state.sellerProfileInfo.profile_picture !== null
+                    ? state.sellerProfileInfo.profile_picture
+                    : defaultProfilePicture}
+                  alt="picture1"
+                  onClick={() => navigate(`/agencies/${state.sellerProfileInfo.seller}`)} />
+              </Grid>
+
+              <Grid item container direction="column" justifyContent="flex-start" alignItems="flex-start" xs={12} md={6}>
+                <Grid item>
+                  <Typography variant="h5"
+                    style={{ textAlign: "center", marginTop: "1rem", color: "gray" }}>
+                    <IconButton>
+                      <FaUser
+                        size={30}
+                        style={{
+                          padding: "5px",
+                          backgroundColor: "#fff",
+                          borderRadius: "50%",
+                          marginLeft: "5px",
+                          color: "gray",
+                        }} /><span style={{ color: "gary", fontSize: "1rem" }}>{convertDigits(state.sellerProfileInfo.agency_name)}</span>
+                    </IconButton>
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="h5"
+                    style={{ textAlign: "center", marginTop: "5px" }}>
+                    <IconButton
+                    //  onClick={handleClick(state.sellerProfileInfo.phone_number)}
+                    >
+                      <AiFillPhone
+                        size={30}
+                        style={{
+                          padding: "5px",
+                          backgroundColor: "#fff",
+                          borderRadius: "50%",
+                          marginLeft: "5px",
+                          color: "gray",
+                        }}
+                      /> <span style={{ color: "gary", fontSize: "1rem", fontFamily: "YekanBakh" }}>{convertDigits(state.sellerProfileInfo.phone_number)}</span>
+                    </IconButton>
+                  </Typography>
+                </Grid>
+                <Grid item onClick={() => navigate(`/agencies/${state.sellerProfileInfo.seller}`)}>
+                  <Typography variant="h5"
+                    style={{ textAlign: "center", marginTop: "5px", fontFamily: "YekanBakh" }}>
+                    <IconButton>
+                      <BiGridVertical
+                        size={30}
+                        style={{
+                          padding: "5px",
+                          backgroundColor: "#fff",
+                          borderRadius: "50%",
+                          marginLeft: "5px",
+                          color: "gray",
+                        }} /><span style={{ color: "gary", fontSize: "1rem", fontFamily: "YekanBakh" }}> سایر آگهی های آگهی گذار</span>
+                    </IconButton>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
 
 
-        {listingPictures.length > 0 ? (
-          <Card cardClass={styles.pictureSlider}>
-            {listingPictures.map((picture, index) => {
-              return (
-                <div key={index}>
-                  {index === currentPicture ? (
-                    <img src={picture}
-                      alt="pictures" />)
-                    :
-                    ("")}
+            {GlobalState.userId == state.listingInfo.seller ?
+              (<Grid item container justifyContent="space-around" style={{ marginTop: "1rem", padding:"10px" }}>
+                <Button
+                  style={{ backgroundColor: 'white', color: '#333333' }}
+                  variant="contained"
+                  onClick={handleClickOpen}
+                >
+                  ویرایش
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={DeleteHandler}
+                  disabled={state.disabledBtn}>
+                  حذف
+                </Button>
+                <Dialog open={open} onClose={handleClose} fullScreen >
+                  <ListingUpdate
+                    listingData={state.listingInfo}
+                    closeDialog={handleClose} />
+                </Dialog>
+              </Grid>)
+              :
+              ("")
+            }
+
+          </Card>
+        </div>
+
+
+        <div className={styles.cardContentImage}>
+          <div className={styles.pictureMainContainer}>
+            {listingPictures.length > 0 ? (
+              <Card cardClass={styles.thumbnailPicturesStyle}>
+                <div className={styles.thumbnailPicturesContainer}>
+                  {listingPictures.map((picture, index) => {
+                    return (
+                      <img
+                        key={index}
+                        src={picture}
+                        alt="thumbnail"
+                        onClick={() => setCurrentPicture(index)}
+                        className={index === currentPicture ? styles.activeThumbnail : styles.thumbnail}
+                      />
+                    )
+                  })}
+                  <IoIosArrowUp onClick={PreviousPicture} size={20} className={styles.rightArrow} />
+                  <IoIosArrowDown onClick={NextPicture} size={20} className={styles.leftArrow} />
                 </div>
-              )
-            })}
-          </Card>) : (<Card cardClass={styles.pictureSlider}>
-            <img style={{ color: "gray" }}
-              src={camera}
-              alt="camera" />
-          </Card>)}
+              </Card>) : ("")}
+            {listingPictures.length > 0 ? (
+              <Card cardClass={styles.pictureSlider}>
+                {listingPictures.map((picture, index) => {
+                  return (
+                    <div key={index}>
+                      {index === currentPicture ? (
+                        <img src={picture}
+                          alt="pictures" />)
+                        :
+                        ("")}
+                    </div>
+                  )
+                })}
+              </Card>) : (<Card cardClass={styles.pictureSlider}>
+                <img style={{ color: "gray" }}
+                  src={camera}
+                  alt="camera" />
+              </Card>)}
+          </div>
+
+          <Card cardClass={styles.cardConetntListing}>
+            <h5>اطلاعات ملک:</h5>
+            {state.listingInfo.bargain_type === "فروش" && <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigitsToWords(state.listingInfo.price_for_sale)}<span>تومان</span></h4>}
+            {state.listingInfo.bargain_type === "رهن کامل" || state.listingInfo.bargain_type === "اجاره" ? <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigitsToWords(state.listingInfo.price_for_sale)}<span> تومان رهن یا ودیعه </span></h4> : ""}
+            {state.listingInfo.bargain_type === "اجاره" && <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigitsToWords(state.listingInfo.rent_per_month)}<span> تومان اجاره ماهیانه </span></h4>}
+            <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigits(state.listingInfo.area_metere)}<span>متر زیربنا</span></h4>
+            <h4><GiCheckMark style={{ color: "#757575" }} /><span>دارای {"  "}</span>{state.listingInfo.rooms}</h4>
+            <h4><GiCheckMark style={{ color: "#757575" }} /><span>  طبقه   </span>{convertDigits(state.listingInfo.floor_of_building)}<span>{" "}از{" "}</span>{state.listingInfo.number_of_floor_of_building === null || state.listingInfo.number_of_floor_of_building === "" ? "" : <span>{convertDigits(state.listingInfo.number_of_floor_of_building)}</span>}</h4>
+            {state.listingInfo.number_of_unit_per_floor === null || state.listingInfo.number_of_unit_per_floor === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigits(state.listingInfo.number_of_unit_per_floor)}<span> واحد در هر طبقه</span></h4>}
+            {state.listingInfo.listing_type === null || state.listingInfo.listing_type === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span> نوع مکان  </span>{state.listingInfo.listing_type}<span> می باشد </span></h4>}
+            {state.listingInfo.age_of_building === null || state.listingInfo.age_of_building === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} />{convertDigits(state.listingInfo.age_of_building)}<span> سال ساخت است</span></h4>}
+            {state.listingInfo.building_face === null || state.listingInfo.building_face === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  جهت  </span>{state.listingInfo.building_face}</h4>}
+            {state.listingInfo.building_apearence === "سایر" || state.listingInfo.building_apearence === null || state.listingInfo.building_apearence === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  ظاهر ساختمان  </span>{state.listingInfo.building_apearence}<span> {""}می باشد{""}</span></h4>}
+            {state.listingInfo.floor_covering === "سایر" || state.listingInfo.floor_covering === null || state.listingInfo.floor_covering === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  کف ساختمان  </span>{state.listingInfo.floor_covering}<span>{" "}است{" "}</span></h4>}
+            {state.listingInfo.kitchen_apearence === "سایر" || state.listingInfo.kitchen_apearence === null || state.listingInfo.kitchen_apearence === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  آشپزخانه </span>{state.listingInfo.kitchen_apearence}<span>{" "} است{" "}</span></h4>}
+            {state.listingInfo.wc_type === null || state.listingInfo.wc_type === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  سرویس  </span>{state.listingInfo.wc_type}</h4>}
+            {state.listingInfo.heating_system === "سایر" || state.listingInfo.heating_system === null || state.listingInfo.heating_system === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>سیستم گرمایشی </span>{state.listingInfo.heating_system}</h4>}
+            {state.listingInfo.cooling_system === "سایر" || state.listingInfo.cooling_system === null || state.listingInfo.cooling_system === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>سیستم سرمایشی  </span>{state.listingInfo.cooling_system}</h4>}
+            {state.listingInfo.advertiser === null || state.listingInfo.advertiser === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  آگهی دهنده  </span>{state.listingInfo.advertiser}<span>{" "}است{" "}</span></h4>}
+            {state.listingInfo.name_of_property_owner === null || state.listingInfo.name_of_property_owner === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  اسم مالک  </span>{state.listingInfo.name_of_property_owner}<span>{" "}است{" "}</span></h4>}
+            {state.listingInfo.property_status === null || state.listingInfo.property_status === "" ? "" : <h4><GiCheckMark style={{ color: "#757575" }} /><span>  ملک </span>{state.listingInfo.property_status}<span>{" "}است{" "}</span></h4>}
+            {state.listingInfo.bargain_type === "فروش" ? (
+              <>
+                {state.listingInfo.house_document_status === null || state.listingInfo.house_document_status === "" ? "" : <h4><FcCheckmark /><span>  وضعیت سند  </span>{state.listingInfo.house_document_status}<span>{" "}است{" "}</span></h4>}
+                {state.listingInfo.house_document_type === null || state.listingInfo.house_document_type === "" ? "" : <h4><FcCheckmark /><span> نوع سند  </span>{state.listingInfo.house_document_type}<span>{" "}است{" "}</span></h4>}
+              </>
+            ) : ("")}
+          </Card>
+
+          <Card cardClass={styles.cardInfoContainerFaxilites}>
+            <h5>سایر امکانات:</h5>
+            <div style={{ width: "100%", display: 'flex', flexWrap: 'wrap', justifyContent: "flex-start", padding: '5px', marginTop: '5px' }}>
+              {state.listingInfo.balcony ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>بالکن</Typography>
+                </Grid>)
+                : ("")}
+
+              {state.listingInfo.pool ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>استخر</Typography>
+                </Grid>)
+                : ("")}
+
+
+              {state.listingInfo.elevator ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>آسانسور</Typography>
+                </Grid>)
+                : ("")}
+
+              {state.listingInfo.lobby ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>لابی</Typography>
+                </Grid>)
+                : ("")}
+
+
+              {state.listingInfo.parking ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>پارکینگ</Typography>
+                </Grid>)
+                : ("")}
+
+              {state.listingInfo.guard ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>نگهبان</Typography>
+                </Grid>)
+                : ("")}
+
+              {state.listingInfo.warehouse ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>انباری</Typography>
+                </Grid>)
+                : ("")}
+
+              {state.listingInfo.Jacuzzi ? (
+                <Grid item style={{ display: "flex", margin: "3px" }} xs={12} md={6}>
+                  <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
+                  <Typography variant="h6" style={{ fontSize: "1rem" }}>جکوزی</Typography>
+                </Grid>)
+                : ("")}
+            </div>
+            <br />
+            {state.listingInfo.address_of_building === null || state.listingInfo.address_of_building === "" ? "" : <h4><span>  آدرس دقیق ملک : </span>{convertDigits(state.listingInfo.address_of_building)}</h4>}
+            {state.listingInfo.description === null || state.listingInfo.description === "" ? "" : <h4><span >    توضیحات : </span>{convertDigits(state.listingInfo.description)}</h4>}
+          </Card>
+        </div>
       </div>
 
 
 
-
-
-
-      <div className={styles.sellerInformationContainer}>
-        <Card cardClass={styles.cardInfoContainerFaxilites}>
-          <h5>سایر امکانات:</h5>
-          <div style={{width:"100%", display: 'flex', flexWrap: 'wrap', justifyContent: "flex-start", padding: '5px', marginTop: '5px' }}>
-            {state.listingInfo.balcony ? (
-              <Grid item style={{ display: "flex" , margin:"3px"}} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>بالکن</Typography>
-              </Grid>)
-              : ("")}
-
-            {state.listingInfo.pool ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>استخر</Typography>
-              </Grid>)
-              : ("")}
-
-
-            {state.listingInfo.elevator ? (
-              <Grid item style={{ display: "flex" , margin:"3px"}} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>آسانسور</Typography>
-              </Grid>)
-              : ("")}
-
-            {state.listingInfo.lobby ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>لابی</Typography>
-              </Grid>)
-              : ("")}
-
-
-            {state.listingInfo.parking ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>پارکینگ</Typography>
-              </Grid>)
-              : ("")}
-
-            {state.listingInfo.guard ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>نگهبان</Typography>
-              </Grid>)
-              : ("")}
-
-            {state.listingInfo.warehouse ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>انباری</Typography>
-              </Grid>)
-              : ("")}
-
-            {state.listingInfo.Jacuzzi ? (
-              <Grid item style={{ display: "flex", margin:"3px" }} xs={12} md={6}>
-                <RiCheckboxCircleLine style={{ color: "#757575", fontSize: "1.2rem" }} />
-                <Typography variant="h6" style={{ fontSize: "1rem" }}>جکوزی</Typography>
-              </Grid>)
-              : ("")}
-          </div>
-          <br />
-          {state.listingInfo.address_of_building === null || state.listingInfo.address_of_building === "" ? "" : <h4><span>  آدرس دقیق ملک : </span>{digitsEnToFa(state.listingInfo.address_of_building)}</h4>}
-          {state.listingInfo.description === null || state.listingInfo.description === "" ? "" : <h4><span >    توضیحات : </span>{digitsEnToFa(state.listingInfo.description)}</h4>}
-        </Card>
-        <Card cardClass={styles.cardInfoContainer}>
-          <h4>آگهی گذار</h4>
-          <div className={styles.InfoContainer}>
-            <Grid item xs={12} md={6}>
-              <img
-                src={state.sellerProfileInfo.profile_picture !== null
-                  ? state.sellerProfileInfo.profile_picture
-                  : defaultProfilePicture}
-                alt="picture1"
-                onClick={() => navigate(`/agencies/${state.sellerProfileInfo.seller}`)} />
-            </Grid>
-
-            <Grid item container direction="column" justifyContent="flex-start" alignItems="flex-start" xs={12} md={6}>
-              <Grid item>
-                <Typography variant="h5"
-                  style={{ textAlign: "center", marginTop: "1rem", color: "gray" }}>
-                  <IconButton>
-                    <FaUser
-                      size={30}
-                      style={{
-                        padding: "5px",
-                        backgroundColor: "#fff",
-                        borderRadius: "50%",
-                        marginLeft: "5px",
-                        color: "gray",
-                      }} /><span style={{ color: "gary", fontSize: "1rem" }}>{digitsEnToFa(state.sellerProfileInfo.agency_name)}</span>
-                  </IconButton>
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="h5"
-                  style={{ textAlign: "center", marginTop: "5px" }}>
-                  <IconButton
-                  //  onClick={handleClick(state.sellerProfileInfo.phone_number)}
-                  >
-                    <AiFillPhone
-                      size={30}
-                      style={{
-                        padding: "5px",
-                        backgroundColor: "#fff",
-                        borderRadius: "50%",
-                        marginLeft: "5px",
-                        color: "gray",
-                      }}
-                    /> <span style={{ color: "gary", fontSize: "1rem", fontFamily:"YekanBakh" }}>{digitsEnToFa(state.sellerProfileInfo.phone_number)}</span>
-                  </IconButton>
-                </Typography>
-              </Grid>
-              <Grid item onClick={() => navigate(`/agencies/${state.sellerProfileInfo.seller}`)}>
-                <Typography variant="h5"
-                  style={{ textAlign: "center", marginTop: "5px", fontFamily:"YekanBakh" }}>
-                  <IconButton>
-                    <BiGridVertical
-                      size={30}
-                      style={{
-                        padding: "5px",
-                        backgroundColor: "#fff",
-                        borderRadius: "50%",
-                        marginLeft: "5px",
-                        color: "gray",
-                      }} /><span style={{ color: "gary", fontSize: "1rem", fontFamily:"YekanBakh" }}> سایر آگهی های آگهی گذار</span>
-                  </IconButton>
-                </Typography>
-              </Grid>
-            </Grid>
-          </div>
-
-
-
-          {GlobalState.userId == state.listingInfo.seller ?
-            (<Grid item container justifyContent="space-around" style={{ marginTop: "1rem" }}>
-              <Button
-                style={{ backgroundColor: 'white', color: '#333333' }}
-                variant="contained"
-                onClick={handleClickOpen}
-              >
-                ویرایش
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={DeleteHandler}
-                disabled={state.disabledBtn}>
-                حذف
-              </Button>
-              <Dialog open={open} onClose={handleClose} fullScreen >
-                <ListingUpdate
-                  listingData={state.listingInfo}
-                  closeDialog={handleClose} />
-              </Dialog>
-            </Grid>)
-            :
-            ("")
-          }
-
-        </Card>
-      </div>
 
 
 
@@ -782,10 +785,6 @@ function ListingDetail() {
         <ListingPios listingInfo={state.listingInfo} />
       </div>
 
-      {/* <Card cardClass={styles.explanationCardContainer}>
-          <h4><span>زمان آگهی : </span> {moment(state.listingInfo.date_posted, 'YYYY/MM/DD HH:mm:ss').locale('fa').format('YYYY/MM/DD , HH:mm:ss').toString()}</h4>
-          <h4>{now}</h4>
-        </Card> */}
 
       <Snackbar
         open={state.openSnack}
@@ -813,5 +812,7 @@ function ListingDetail() {
     </div >
   )
 }
+
+
 
 export default ListingDetail

@@ -4,7 +4,7 @@ import styles from "./ListingList.module.scss";
 //component
 import Search from "../../search/Search";
 import ListingCard from "../listingItem/ListingCard";
-import { ListingContainer } from "../listingItem/ListingCardStyle";
+// import { ListingContainer } from "../listingItem/ListingCardStyle";
 
 //react icons
 import { BsFillGridFill } from "react-icons/bs";
@@ -13,8 +13,9 @@ import { FaCogs } from "react-icons/fa";
 //useImmerReducer
 import { useImmerReducer } from "use-immer";
 
+
 //persian tools
-import { digitsEnToFa, numberToWords } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 
 //material ui
 import { Pagination, Button } from "@mui/material";
@@ -212,7 +213,7 @@ function ListingList({ allListings }) {
             <div className={styles.top}>
                 <div className={styles.icons}>
                     <Button variant="outlined" startIcon={<BsFillGridFill size={25} color="#e10a1d" />}>
-                        <b>{digitsEnToFa(state.filteredListings.length)}</b> ملک یافت شد
+                        <b>{convertDigits(state.filteredListings.length)}</b> ملک یافت شد
                     </Button>
                 </div>
 

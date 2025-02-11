@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Axios from "axios"
 
 //mui
-import { CircularProgress, Grid } from '@mui/material'
+import { CircularProgress } from '@mui/material'
+import Grid from '@mui/material/Grid2';
 
 
 //components
 import { Map } from '../../components';
 import ListingList from '../../components/listings/listingList/ListingList';
-
-
+import News from '../../components/news/News';
 
 
 
@@ -62,6 +62,9 @@ function Home() {
       </div>
       <div>
         <ListingList allListings={allListings} />
+      </div>
+      <div>
+        <News />
       </div>
     </div>
   )

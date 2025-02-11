@@ -4,6 +4,10 @@
     align-items: center;
     justify-content: center;
     background-color: #f1f1f1; 
+    padding-top: 50px;
+    @media(max-width:800px){
+    padding-top:100px;
+    }
     .cardContainer{
         width: 1040px;
         padding: 50px;

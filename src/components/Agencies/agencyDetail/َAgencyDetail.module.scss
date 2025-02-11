@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: column;  
     gap: 5px;
+    padding: 100px 50px;
     align-items:flex-start;
     justify-content: space-between;
     background-color:#f1f1f1;
-    padding: 0px 50px 50px 50px;
     @media (max-width:700px) {
         align-items: center;
-        padding: 30px 0px;
+        padding:100px 0px;
     }
     .breadCrumbsContainer{
         width: 100%;
@@ -22,8 +22,8 @@
         align-items: center;
         @media (max-width: 500px){
             flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
+            // justify-content: flex-start;
+            align-items: center;
             gap:10px;
             height: fit-content;
             padding: 20px;
@@ -105,6 +105,8 @@
             align-items: center;
             @media(max-width: 800px){
                 width: calc(100% - 10%);
+                justify-content: center;
+                align-items: center;
             }
     
     

@@ -12,9 +12,10 @@ import {
     Typography,
     Breadcrumbs,
     CircularProgress,
-    Grid,
     Link,
 } from "@mui/material"
+import Grid from '@mui/material/Grid2';
+
 
 //mui icon
 import HomeIcon from '@mui/icons-material/Home';
@@ -22,13 +23,14 @@ import GrainIcon from '@mui/icons-material/Grain';
 
 //components
 import UserComment from '../../userComment/UserComment';
-import Card from "../../../components/card/Card"
+
 
 
 function PostDetail() {
     const params = useParams()
     const navigate = useNavigate()
     const GlobalState = useContext(StateContext)
+    const [allPosts, setAllPosts] = useState([])
 
 
 
@@ -56,11 +58,6 @@ function PostDetail() {
 
 
 
-    const [userLike, setUserLike] = useState(state.postInfo.user_like);
-    const [likeCount, setLikeCount] = useState(0);
-    const [dislikeCount, setDislikeCount] = useState(0);
-
-
 
     useEffect(() => {
         async function GetPostInfo() {
@@ -77,6 +74,21 @@ function PostDetail() {
             }
         }
         GetPostInfo()
+    }, [params.id])
+
+
+
+
+    useEffect(() => {
+        async function GetAllPosts() {
+            try {
+                const response = await Axios.get("https://api.amlakeeno.ir/api/posts/");
+                setAllPosts(response.data);
+            } catch (e) {
+                console.log(e.response)
+            }
+        }
+        GetAllPosts();
     }, [])
 
 
@@ -96,59 +108,11 @@ function PostDetail() {
 
 
 
-    const handleLike = () => {
-        const likeDislikeValue = !userLike;
-        const userId = GlobalState.userId;
-        const postId = state.postInfo.id;
-
-        Axios.post(`https://api.amlakeeno.ir/api/posts/${state.postInfo.id}/like_dislike/`,
-            {
-                user_id: userId,
-                post_id: postId,
-                like_dislike: likeDislikeValue
-            })
-            .then(response => {
-                setUserLike(likeDislikeValue);
-                setLikeCount(response.data.like_count);
-                setDislikeCount(response.data.dislike_count);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
-
-
-    const handleDislike = () => {
-        const likeDislikeValue = !userLike;
-        const userId = GlobalState.userId;
-        const postId = state.postInfo.id;
-
-        Axios.post(`https://api.amlakeeno.ir/api/posts/${state.postInfo.id}/like_dislike/`,
-            {
-                user_id: userId,
-                post_id: postId,
-                like_dislike: likeDislikeValue
-            })
-            .then(response => {
-                setUserLike(likeDislikeValue);
-                setLikeCount(response.data.like_count);
-                setDislikeCount(response.data.dislike_count);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
-
-
-
 
 
 
     return (
         <div className={styles.postDetailContainer}>
-
             <div className={styles.breadCrumbsContainer}>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link
@@ -173,26 +137,25 @@ function PostDetail() {
                     </Typography>
                 </Breadcrumbs>
             </div>
-            <div className={styles.cardContentImage}>
-                <Card cardClass={styles.cardConetntPost}>
+
+
+            <div className={styles.mainContentDetailComponent}>
+                <div className={styles.cardContentImage}>
+                    <div className={styles.picturePost}>
+                        <img src={state.postInfo.image} alt="picture1" />
+                    </div>
                     <h1>{state.postInfo.post_name}</h1>
                     <p>{state.postInfo.description}</p>
-                    {/* <button onClick={handleLike}>
-                        <FontAwesomeIcon icon={userLike ? faThumbsUp : faThumbsDown} />
-                    </button>
-                    <p>Like Count: {state.postInfo.like_count}</p>
-                    {likeCount}
 
-                    <button onClick={handleDislike}>
-                        <FontAwesomeIcon icon={userLike ? faThumbsDown : faThumbsUp} />
-                    </button>
-                    <p>Dislike Count: {state.postInfo.dislike_count}</p>
-                    {dislikeCount} */}
-                </Card>
-
-                <Card cardClass={styles.picturePost}>
-                    <img src={state.postInfo.image} alt="picture1" />
-                </Card>
+                </div>
+                <div className={styles.postListContainer}>
+                    <h2>مطالب مهم</h2>
+                    <div className={styles.postList}>
+                        {allPosts.map((post) => (
+                            <p key={post.id} onClick={() => navigate(`/posts/${post.id}/`)}>{post.post_name}</p>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             <div className={styles.commentSction}>

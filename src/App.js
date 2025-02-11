@@ -173,7 +173,7 @@ function App() {
   }, [state.userIsLogged])
 
 
-  
+
 
 
 
@@ -191,7 +191,7 @@ function App() {
   return (
     <>
       <StyledEngineProvider injectFirst>
-        <ToastContainer />
+        <ToastContainer/>
         <CssBaseline />
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={theme}>
@@ -199,7 +199,7 @@ function App() {
               <DispatchContext.Provider value={dispatch}>
                 <ScrollToTop />
                 <Routes>
-                  <Route path="/" element={<Layout><Home /></Layout>}/>
+                  <Route path="/" element={<Layout><Home /></Layout>} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/reset" element={<Reset />} />
@@ -214,7 +214,7 @@ function App() {
                   <Route path="/contactus" element={<ContactUs />} />
                   <Route path="/posts" element={<Layout><Posts /></Layout>} />
                   <Route path="/posts/:id" element={<Layout><PostDetail /></Layout>} />
-                  <Route path="/commission" element={<Layout><Commission/></Layout>}/>
+                  <Route path="/commission" element={<Layout><Commission /></Layout>} />
                 </Routes>
               </DispatchContext.Provider>
             </StateContext.Provider>

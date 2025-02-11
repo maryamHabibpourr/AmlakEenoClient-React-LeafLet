@@ -11,22 +11,22 @@ import { useImmerReducer } from "use-immer";
 import StateContext from "../../Context/StateContext";
 //MUI
 import {
-    Grid,
     Typography,
     Button,
     CircularProgress,
     Breadcrumbs,
      Link,
 } from "@mui/material"
+import Grid from '@mui/material/Grid2';
 import { makeStyles } from '@mui/styles';
 //mui icons
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 //components
 import ProfileUpdate from "./profileUpdate/ProfileUpdate";
-//persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
 
+//persian tools
+import { convertDigits } from "persian-helpers";
 
 
 
@@ -149,7 +149,7 @@ function Profile() {
         else {
             return (
                 <Button className={classes.dispalyPrpertyBtn} onClick={() => navigate(`/agencies/${state.userProfile.sellerId}`)}>
-                    {digitsEnToFa(state.userProfile.sellerListings.length)}  آگهی ملک توسط شما ثبت شده است!
+                    {convertDigits(state.userProfile.sellerListings.length)}  آگهی ملک توسط شما ثبت شده است!
                 </Button>
             )
         }

@@ -4,7 +4,7 @@ import Axios from "axios";
 //mui
 import { Snackbar } from '@mui/material';
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 //style
 import styles from "./Header.module.scss";
 //motion styles
@@ -70,6 +70,8 @@ function Header() {
   useEffect(() => {
     GlobalDispatch({ type: "calculateTotalQuantity" })
   }, [cartItems, GlobalDispatch]);
+
+
 
 
   //setting logout
@@ -184,7 +186,7 @@ function Header() {
 
   // fix navbar
   const fixNavbar = () => {
-    if (window.scrollY > 50) {
+    if (window.scrollY > 10) {
       setScrollPage(true)
     } else {
       setScrollPage(false)
@@ -195,7 +197,7 @@ function Header() {
 
 
   return (
-    <header className={scrollpage ? `${styles.fixed}` : null}>
+    <header className={styles.fixed}>
       <div className={styles.header}>
         {logo}
         <ul >
@@ -209,9 +211,6 @@ function Header() {
             <NavLink to="/agencies" className={activeLink}><MdRealEstateAgent size={20} /><p>آژانس های املاک</p></NavLink>
           </li>
         </ul>
-
-
-
 
         <div>
           {openMoreList ? closeMenIcon : menuIcon}
@@ -245,7 +244,7 @@ function Header() {
                       </div>
                       <div className={styles.subMenuListContainerDiv}>
                         <Link><CgChevronRight size={20} /></Link>
-                        <Link to="/storecards"> <span>{`${digitsEnToFa(cartTotalQuantity)}`}</span>پست های ذخیره شده</Link>
+                        <Link to="/storecards"> <span>{`${convertDigits(cartTotalQuantity)}`}</span>پست های ذخیره شده</Link>
                       </div>
                     </div>
                   </div>
@@ -284,7 +283,7 @@ function Header() {
                       <p> حساب کاربری {GlobalState.userUsername} عزیز</p>
                       <div onClick={HandleLogout}>خروج<MdTransitEnterexit size={23} /></div>
                       <div onClick={() => navigate("/profile")}>تنظیمات حساب کاربری<RiUserSettingsFill size={23} /></div>
-                      <div onClick={() => navigate("/storecards")}>پست های ذخیره شده<span style={{color:"red"}}>{`${digitsEnToFa(cartTotalQuantity)}`}</span></div>
+                      <div onClick={() => navigate("/storecards")}>پست های ذخیره شده<span style={{color:"red"}}>{`${convertDigits(cartTotalQuantity)}`}</span></div>
                     </>
                   )
                   :

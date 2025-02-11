@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useImmerReducer } from 'use-immer';
+import { useNavigate} from "react-router-dom"
+
 
 // استایل‌ها را از فایل بالا ایمپورت می‌کنیم:
 import {
@@ -32,7 +34,8 @@ import cam from "../../../assets/camera.jpg";
 
 // کتابخانه‌های جانبی برای تاریخ جلالی، مپ، کانتکست و ...:
 import moment from 'jalali-moment';
-import { Grid, IconButton } from '@mui/material';
+import {  IconButton } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 
@@ -54,13 +57,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import LinkComponent from "../../linkComponent/LinkComponent";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-// تبدیل اعداد انگلیسی به فارسی و افزودن کاما
-import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
+
+//persian tools
+import { convertDigits } from "persian-helpers";
 
 
 const ListingCard = ({ listing }) => {
   const GlobalDispatch = useContext(DispatchContext);
   const GlobalState = useContext(StateContext);
+  const navigate = useNavigate()
 
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -142,7 +147,7 @@ const ListingCard = ({ listing }) => {
 
   // قیمت هر متر
   const PriceEachMeter = listing.price_for_sale / listing.area_metere;
-  const convertedPrice = digitsEnToFa(
+  const convertedPrice = convertDigits(
     Math.round(PriceEachMeter)
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -166,8 +171,11 @@ const ListingCard = ({ listing }) => {
     let difference = now.diff(post_date, 'days');
     let formattedDifference = difference > 0 ? `${difference} روز پیش` : 'همین الان';
 
-    return digitsEnToFa(formattedDifference);
+    return convertDigits(formattedDifference);
   }
+
+
+
 
   return (
     // به جای <Card> از <CardWrapper> + <CardInner> استفاده می‌کنیم
@@ -195,7 +203,7 @@ const ListingCard = ({ listing }) => {
 
           <PicLength>
             <AiOutlineCamera size={15} color="#fff" />
-            {digitsEnToFa(listingPictures)}
+            {convertDigits(listingPictures)}
           </PicLength>
         </CardMedia>
 
@@ -205,7 +213,7 @@ const ListingCard = ({ listing }) => {
               {listing.bargain_type}{"  "}{listing.property_type}
             </CardTitleInfo>
             <CardTitleInfo>
-              {digitsEnToFa(listing.area_metere)} متری
+              {convertDigits(listing.area_metere)} متری
             </CardTitleInfo>
           </CardTitle>
 
@@ -219,7 +227,7 @@ const ListingCard = ({ listing }) => {
                 )}
                 <Price>
                   <PriceText>
-                    {digitsEnToFa(addCommas(listing.price_for_sale))} تومان
+                    {convertDigits(listing.price_for_sale, { separator: true })} تومان
                   </PriceText>
                 </Price>
               </PriceInfo>
@@ -228,7 +236,7 @@ const ListingCard = ({ listing }) => {
                 <PriceInfo>
                   <span>قیمت هر متر:</span>
                   <Price>
-                    <PriceText>{digitsEnToFa(addCommas(convertedPrice))}</PriceText>
+                    <PriceText>{convertDigits(convertedPrice, { separator: true })}</PriceText>
                   </Price>
                 </PriceInfo>
               )}
@@ -247,7 +255,7 @@ const ListingCard = ({ listing }) => {
                     <span>اجاره ماهیانه:</span>
                     <Price>
                       <PriceText>
-                        {digitsEnToFa(addCommas(listing.rent_per_month))} تومان
+                        {convertDigits(listing.rent_per_month , { separator: true })} تومان
                       </PriceText>
                     </Price>
                   </PriceInfo>
@@ -260,7 +268,7 @@ const ListingCard = ({ listing }) => {
               مشاهده مکان روی نقشه
             </Tags>
             <CtaGrp>
-              <CtaLink href={`/listings/${listing.id}`}>
+              <CtaLink  onClick={() => navigate(`/listings/${listing.id}/`)}>
                 مشاهده جزئیات
               </CtaLink>
             </CtaGrp>

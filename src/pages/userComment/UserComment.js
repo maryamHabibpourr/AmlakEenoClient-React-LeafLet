@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./UserComment.module.scss"
 import moment from 'jalali-moment';
@@ -9,8 +9,9 @@ import Axios from "axios"
 //mui
 import { Button, TextField, Typography, Snackbar } from '@mui/material';
 
+
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 
 
 //components
@@ -128,7 +129,7 @@ function UserComment({ postInfo }) {
     <div className={styles.commentComponent}>
       <Card cardClass={styles.CommentPostContainer}>
         {GlobalState.userIsLogged ? "" :
-          <span>لطفاً برای فعال شدن کلید ثبت دیدگاه اول ورود نمایید<Link onClick={()=>setLoginOpen(true)} style={{ color: "blue" }}>ورود</Link></span>
+          <span>لطفاً برای فعال شدن کلید ثبت دیدگاه اول ورود نمایید<Link onClick={() => setLoginOpen(true)} style={{ color: "blue" }}>ورود</Link></span>
         }
 
         <div className={styles.commentPost}>
@@ -138,7 +139,7 @@ function UserComment({ postInfo }) {
             InputLabelProps={{ style: { fontSize: 13 } }}
             label="دیدگاه جدید"
             multiline
-            rows={4}
+            rows={3}
             variant="outlined"
             value={state.bodymessage}
             onChange={(e) => dispatch({
@@ -156,7 +157,7 @@ function UserComment({ postInfo }) {
           <Button
             disabled={!GlobalState.userIsLogged}
             variant='contained'
-            color='primary'
+            color='#82050f'
             onClick={postComment}
           >
             ارسال دیدگاه
@@ -165,22 +166,32 @@ function UserComment({ postInfo }) {
       </Card>
 
       <Card cardClass={styles.container}>
-        <h3>نظرات شما:</h3>
-        {postInfo.comments.map((comment) => {
-          return (
-            <div className={styles.dialogBox}>
-              <div className={styles.dialogBody}>
-                <p>{comment.body}</p>
-              </div>
-              <Typography className={styles.time}>
-                {digitsEnToFa(moment(comment.time, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD').toString())}
-              </Typography>
-              <Typography className={styles.user}>
-                {comment.user}
-              </Typography>
-            </div>
+        {
+          postInfo.comments.length === 0 ? (
+            <h3>هنوز نظری ثبت نشده است!</h3>
           )
-        })}
+            :
+            (
+              <>
+                <h3>نظرات شما:</h3>
+                {postInfo.comments.map((comment) => {
+                  return (
+                    <div className={styles.dialogBox}>
+                      <div className={styles.dialogBody}>
+                        <p>{comment.body}</p>
+                      </div>
+                      <Typography className={styles.time}>
+                        {convertDigits(moment(comment.time, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD').toString())}
+                      </Typography>
+                      <Typography className={styles.user}>
+                        {comment.user}
+                      </Typography>
+                    </div>
+                  )
+                })}
+              </>
+            )
+        }
       </Card>
 
       <Snackbar

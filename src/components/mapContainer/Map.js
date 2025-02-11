@@ -33,7 +33,7 @@ function Map({ allListings }) {
 
   return (
     <div className={styles.mContainer}>
-      <MapContainer center={[35.79818421731143, 51.43191553840492]} zoom={14} scrollWheelZoom={true}>
+      <MapContainer center={[35.79818421731143, 51.43191553840492]} zoom={14} scrollWheelZoom={true} zoomControl={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

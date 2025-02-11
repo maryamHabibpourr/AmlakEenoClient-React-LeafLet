@@ -11,20 +11,22 @@ import defaultProfilePicture from "../../assets/defaultProfilePicture.jpg"
 import styles from "./Agency.module.scss"
 //MUI
 import {
-  Grid,
   Button,
   CircularProgress,
   Typography,
   Breadcrumbs,
   Link,
 } from "@mui/material"
+import Grid from '@mui/material/Grid2';
+
 //mui icons
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 //components
 import { MediaSharing } from "../../pages";
+
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 
 
 
@@ -150,7 +152,7 @@ function Agencies() {
             else {
               return (
                 <Button size="small" onClick={() => navigate(`/agencies/${agency.seller}`)}>
-                  {digitsEnToFa(agency.seller_listings.length)} ملک ثبت شده است
+                  {convertDigits(agency.seller_listings.length)} ملک ثبت شده است
                 </Button>
               )
             }

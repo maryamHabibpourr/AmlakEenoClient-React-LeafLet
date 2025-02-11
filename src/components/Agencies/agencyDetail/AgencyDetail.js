@@ -14,7 +14,6 @@ import styles from "./َAgencyDetail.module.scss"
 
 //MUI
 import {
-    Grid,
     CircularProgress,
     IconButton,
     Divider,
@@ -23,7 +22,7 @@ import {
     Link,
     Typography
 } from "@mui/material"
-
+import Grid from '@mui/material/Grid2';
 
 //mui icon
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
@@ -33,7 +32,7 @@ import { AiFillPhone } from "react-icons/ai"
 
 
 //persian tools
-import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { convertDigits } from "persian-helpers";
 
 //date
 import moment from 'jalali-moment';
@@ -43,9 +42,9 @@ import moment from 'jalali-moment';
 import HomeIcon from '@mui/icons-material/Home';
 import GrainIcon from '@mui/icons-material/Grain';
 
+
+
 function AgencyDetail() {
-
-
 
     const navigate = useNavigate()
     // console.log(useParams())
@@ -185,7 +184,7 @@ function AgencyDetail() {
                                 marginLeft: "5px",
                                 color: "gray",
                             }}
-                        /> <span style={{ color: "gary", fontSize: "1rem" }}>{digitsEnToFa(state.userProfile.phoneNumber)}</span>
+                        /> <span style={{ color: "gary", fontSize: "1rem" }}>{convertDigits(state.userProfile.phoneNumber)}</span>
                     </IconButton>
                 </div>
                 <div className={styles.explantion}>
@@ -195,7 +194,6 @@ function AgencyDetail() {
 
 
             <div className={styles.listingCardAgencies}>
-
                 {state.userProfile.sellerListings.map((listing) => {
                     function timeDifference() {
                         let now = moment.utc().locale('fa');
@@ -204,7 +202,7 @@ function AgencyDetail() {
                         let difference = now.diff(post_date, 'days');
                         let formattedDifference = difference > 0 ? `${difference} روز پیش` : 'همین الان';
 
-                        return digitsEnToFa(formattedDifference);
+                        return convertDigits(formattedDifference);
                     }
                     return (
                         <Card cardClass={styles.cardSellerAdds} key={listing.id}>

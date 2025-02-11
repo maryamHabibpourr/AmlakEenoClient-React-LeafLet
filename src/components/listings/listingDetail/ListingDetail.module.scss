@@ -1,306 +1,329 @@
-.listingDetailContainer{
+.listingDetailContainer {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 100px 10px 10px 10px;
+  .fixedIcons {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #fff;
+    width: 30px;
+    z-index: 999;
+  }
+  .dialogBody {
+    position: absolute;
+    width: fit-content;
+    left: 40px;
+    padding: 10px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    z-index: 999;
+
+    .tip {
+      width: 0;
+      height: 0;
+      position: absolute;
+      background: transparent;
+      border: 10px solid rgba(0, 0, 0, 0.8);
+      left: -20px;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+    }
+    .bodyMessage {
+      color: #e2dede;
+      font-size: 1rem;
+    }
+  }
+  .save {
+    top: 2px;
+  }
+  .heart {
+    bottom: 110px;
+  }
+  .copy {
+    bottom: 55px;
+  }
+  .share {
+    bottom: 2px;
+  }
+
+  .breadCrumbsContainer {
     width: 100%;
-    background-color: #f1f1f1;
-    padding: 30px 10px;
-    .fixedIcons{
-        position:fixed;
+    height: 50px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 10px;
+      height: fit-content;
+      padding: 10px;
+    }
+    .oclock {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .mainInfoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    gap: 10px;
+    @media (max-width: 1100px) {
+      gap: 5px;
+    }
+    @media (max-width: 900px) {
+      flex-direction: column-reverse;
+    }
+
+    .sellerInformationContainer {
+      width: 35%;
+      @media (max-width: 1100px) {  
+        width: 45%;
+      }
+      @media (max-width: 900px) {
+        width: calc(100% - 2%);
+      }
+      .cardInfoContainer {
+        height: 330px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        top:50%;
-        left: 15px;
-        transform: translateY(-50%);
-        background-color:rgba(0, 0, 0, 0.8);
-        border: 1px solid #fff;
-        width: 30px;
-        z-index: 999;
-    }
-    .dialogBody{
-        position: absolute;
-        width: fit-content;
-        left: 40px;
-        padding: 10px;
-        color:#fff;
-        background-color: rgba(0, 0, 0, 0.8);
-        border-radius: 10px;
-        z-index: 999;
-        
-        .tip{
-            width: 0;
-            height: 0;
-            position: absolute;
-            background: transparent;
-            border: 10px solid rgba(0, 0, 0, 0.8);
-            left: -20px;
-            border-top-color: transparent;
-            border-left-color: transparent;
-            border-bottom-color: transparent; 
-        }
-        .bodyMessage{
-            color: #e2dede;
-            font-size: 1rem;          
-        }
-    }
-    .save{
-        top:2px;
-    } 
-    .heart{
-        bottom:110px;
-    }
-    .copy{
-        bottom:55px;
-    } 
-    .share{
-       bottom:2px;
-    }  
-
-
-
-    .breadCrumbsContainer{
-        width: 100%;
-        height: 50px;
-        padding: 2rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        @media (max-width: 500px){
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap:10px;
-            height: fit-content;
-            padding: 10px;
-        }
-        .oclock{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-    .cardContentImage{
-        display: flex;
-        flex-direction: row;
         justify-content: center;
-        padding-top: 5px;
-        gap: 10px;
-        margin-top: 5px;
-        @media(max-width:900px){
-            flex-direction:column-reverse; 
-            align-items: center;
-            justify-content: center;
-            gap: 0px;
+        background-color: #dfdad1;
+        padding:16px;
+        margin-top: 10px;
+        position: sticky;  
+        top: 100px;  
+        z-index: 10; 
+        @media (max-width: 900px) {
+          height: fit-content;
+          margin-top: 0px;
+          margin-left: 0px;
+          margin-bottom: 10px;
         }
-        .cardConetntListing{
-            width: 40%;
-            max-height: 530px !important;
-            overflow-y: auto; 
-            scrollbar-width: thin; 
-            padding: 10px 30px;
-            background-color: #fff;
-            border-top: 5px solid var( --color-red);
-            h5{
-                font-size: 1rem;
-                color:#757575;
-                font-family: YekanBakh;
-            }
-            h4{
-                color:#000;
-                font-size: 1rem;
-                font-family: YekanBakh;
-            }
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-                padding: 30px 10px 30px 10px;
-            }
-        }
-        .pictureSlider{
-            width: 50%;
-            max-height: 530px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            background-color: #fff;
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-            }
-            img{
-                align-items: center;
-                justify-content: center;
-                width: calc(100% - 2%);
-                height: 450px;
-                margin: auto;
-                color:gray;
-                @media (max-width:900px){
-                    width:100%;
-                    height: 100%;
-                }
-            }
 
+        h4 {
+          font-size: 22px;
+          color: #333;
+          text-align: center;
+          margin-bottom: 20px;
+          border-bottom: 2px solid #fff;
+          padding-bottom: 10px;
+          font-family: YekanBakh;
+          font-weight: 400;
+          padding:10px;
         }
-        .thumbnailPicturesStyle{
-            width: 10%;
-            background-color: #fff;
-            max-height: 530px;
+        .InfoContainer {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 20px;
+          @media (max-width: 800px) {
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+          }
+          img {
+            height: 11rem;
+            width: 11rem;
+            cursor: pointer;
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+
+    .cardContentImage {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      @media (max-width: 900px) {
+        width: calc(100% - 2%);
+      }
+      .pictureMainContainer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        @media(max-width : 700px){
+          flex-direction: column-reverse;
+        }
+        .pictureSlider {
+          width: 80%;
+          height: 530px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 2rem;
+          background-color: #fff;
+          @media (max-width: 900px) {
+            width: calc(100% - 2%);
+            height: fit-content;
+            padding: 1rem;
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            color: gray;
+            object-fit: cover;
+            @media (max-width: 900px) {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        .thumbnailPicturesStyle {
+          width: 20%;
+          background-color: #fff;
+          max-height: 530px;
+          padding-top: 20px;
+          z-index: 10;
+          @media (max-width: 900px) {
+            width: calc(100% - 2%);
+          }
+          .thumbnailPicturesContainer {
+            width: 100%;
+            margin-bottom: 5px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             position: relative;
-            padding: 30px 0px;
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-end;
-                align-items: center;
-                padding:0 1rem 1rem 1rem;
-                
+            max-height: 500px;
+            overflow: hidden;
+            gap: 10px;
+            @media (max-width: 900px) {
+              flex-direction: row;
+              flex-wrap: wrap;
+              justify-content: flex-end;
+              align-items: center;
+              gap: 5px;
             }
-            .thumbnail {
-                width: 80px;
-                height: 80px;
-                margin: 5px;
-                opacity: 0.5;
-                cursor: pointer;
-                @media(max-width:900px){
-                 
-                }
-              }
-              
-              .activeThumbnail {
-                width: 80px;
-                height: 80px;
-                margin: 5px;
-                opacity: 1;
-                cursor: pointer;
-                @media(max-width:900px){
-                 
-                }
-              }
-              .rightArrow{
-                position: absolute;
-                cursor: pointer;
-                color: gray;
-                top: 2%;
-                &:hover{
-                    background-color: rgb(225, 213, 213);
-                    border-radius: 50%;
-                }
-                @media(max-width:900px){
-                    display: none;
-                }
+          }
+          .thumbnail {
+            width: 80px;
+            height: 80px;
+            margin: 5px;
+            opacity: 0.5;
+            cursor: pointer;
+            @media (max-width: 900px) {
             }
-            .leftArrow{
-                position: absolute;
-                cursor: pointer;
-                color: gray;
-                bottom: 2%;
-                &:hover{
-                    background-color: rgb(225, 213, 213);
-                    border-radius: 50%;
-                }
-                @media(max-width:900px){
-                    display: none;
-                }
+          }
+
+          .activeThumbnail {
+            width: 80px;
+            height: 80px;
+            margin: 5px;
+            opacity: 1;
+            cursor: pointer;
+            @media (max-width: 900px) {
             }
-    
+          }
+          .rightArrow {
+            position: absolute;
+            cursor: pointer;
+            color: red;
+            top: 2%;
+            z-index: 20;
+            &:hover {
+              background-color: rgb(225, 213, 213);
+              border-radius: 50%;
+            }
+            @media (max-width: 900px) {
+              display: none;
+            }
+          }
+          .leftArrow {
+            position: absolute;
+            cursor: pointer;
+            color: red;
+            bottom: 2%;
+            z-index: 20;
+            &:hover {
+              background-color: rgb(225, 213, 213);
+              border-radius: 50%;
+            }
+            @media (max-width: 900px) {
+              display: none;
+            }
+          }
         }
-    
-    }
+      }
 
-
-    .sellerInformationContainer{
+      .cardConetntListing {
         width: 100%;
+        max-height: 530px !important;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        padding: 10px 30px;
+        background-color: #fff;
+        border-top: 5px solid var(--color-red);
+        h5 {
+          font-size: 1rem;
+          color: #757575;
+          font-family: YekanBakh;
+        }
+        h4 {
+          color: #000;
+          font-size: 1rem;
+          font-family: YekanBakh;
+        }
+        @media (max-width: 900px) {
+          padding: 30px 10px 30px 10px;
+        }
+      }
+
+      .cardInfoContainerFaxilites {
+        width: 100%;
+        height: 290px;
+        padding: 30px 20px;
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content:space-between;
-        gap: 10px;
-        @media(max-width:900px){
-            flex-direction: column;
+        flex-direction: column;
+        background-color: #fff;
+        padding: 1rem;
+        margin-top: 10px;
+        @media (max-width: 900px) {
+          width: calc(100% - 2%);
+          height: fit-content;
         }
-        .cardInfoContainer{
-                width: 40%;
-                height: 290px;
-                display: flex;
-                flex-direction:column;
-                align-items: center;
-                justify-content: center;
-                background-color: #DFDAD1;
-                padding: 1rem;
-                margin-top: 10px;
-                @media(max-width:900px){
-                    width: calc(100% - 2%);
-                    height: fit-content;
-                    margin-top: 0px;
-                    margin-left: 0px;
-                    margin-bottom: 10px;
-                }
-                h4{
-                    font-size: 18px;
-                    color: #333;
-                    text-align: center;
-                    margin-bottom: 20px;
-                    border-bottom: 2px solid #fff;
-                    padding-bottom: 10px;
-                }
-                .InfoContainer{
-                    width: 100%;
-                    display: flex;
-                    flex-direction:row;
-                    justify-content: space-between;
-                    @media(max-width:900px){
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    img{
-                        height: 10rem;
-                        width: 10rem;
-                        cursor: pointer;
-                    }
-                }
-              
-
+        h5 {
+          font-size: 20px;
+          color: #757575;
+          text-align: center;
+          margin-bottom: 20px;
         }
-        .cardInfoContainerFaxilites{
-            width: 60%;
-            height: 290px;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            background-color: #fff;
-            padding: 1rem;
-            margin-top: 10px;
-            @media(max-width:900px){
-                width: calc(100% - 2%);
-                height: fit-content;
-            }
-            h5{
-                font-size: 20px;
-                color:#757575;
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            h4{
-                margin-bottom: 30px;
-                font-weight: 500;
-                color: #000;
-                font-size: 1rem;
-                span{
-                    font-size: 18px;
-                    color:#757575;
-                    font-weight: 500;
-                }
-            }
+        h4 {
+          margin-bottom: 30px;
+          font-weight: 500;
+          color: #000;
+          font-size: 1rem;
+          span {
+            font-size: 18px;
+            color: #757575;
+            font-weight: 500;
+          }
         }
+      }
     }
-
+  }
 }
-
-
-  

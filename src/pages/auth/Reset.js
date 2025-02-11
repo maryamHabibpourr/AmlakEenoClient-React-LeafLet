@@ -9,7 +9,9 @@ import Card from "../../components/card/Card";
 //mui
 import { makeStyles } from '@mui/styles';
 import { CssTextField } from "../../muiSettings/Settings";
-import { Grid, Typography, Button, Snackbar, Alert } from "@mui/material"
+import { Typography, Button, Snackbar, Alert } from "@mui/material"
+import Grid from '@mui/material/Grid2';
+
 
 
 
